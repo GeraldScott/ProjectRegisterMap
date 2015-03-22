@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ProjectRegisterMap" transaction-type="RESOURCE_LOCAL">
+		<class>za.co.taung.projectregistermap.model.AddressType</class>
+		<class>za.co.taung.projectregistermap.model.Address</class>
+		<class>za.co.taung.projectregistermap.model.BankAccount</class>
+		<class>za.co.taung.projectregistermap.model.CallApplicationStatus</class>
+		<class>za.co.taung.projectregistermap.model.CallApplication</class>
+		<class>za.co.taung.projectregistermap.model.CallEvaluation</class>
+		<class>za.co.taung.projectregistermap.model.Call</class>
+		<class>za.co.taung.projectregistermap.model.ContactDetail</class>
+		<class>za.co.taung.projectregistermap.model.GeoCode</class>
+		<class>za.co.taung.projectregistermap.model.Image</class>
+		<class>za.co.taung.projectregistermap.model.JobTitle</class>
+		<class>za.co.taung.projectregistermap.model.KeyPerformanceIndicator</class>
+		<class>za.co.taung.projectregistermap.model.KeyResultArea</class>
+		<class>za.co.taung.projectregistermap.model.MilestoneType</class>
+		<class>za.co.taung.projectregistermap.model.OrganisationType</class>
+		<class>za.co.taung.projectregistermap.model.Organisation</class>
+		<class>za.co.taung.projectregistermap.model.Person</class>
+		<class>za.co.taung.projectregistermap.model.Place</class>
+		<class>za.co.taung.projectregistermap.model.Programme</class>
+		<class>za.co.taung.projectregistermap.model.ProjectExpense</class>
+		<class>za.co.taung.projectregistermap.model.ProjectMilestone</class>
+		<class>za.co.taung.projectregistermap.model.ProjectOutput</class>
+		<class>za.co.taung.projectregistermap.model.ProjectStatus</class>
+		<class>za.co.taung.projectregistermap.model.ProjectType</class>
+		<class>za.co.taung.projectregistermap.model.Project</class>
+		<class>za.co.taung.projectregistermap.model.Province</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://goweb:5432/projectregisterdev"/>
+			<property name="javax.persistence.jdbc.user" value="projectregisterdev"/>
+			<property name="javax.persistence.jdbc.password" value="fhr"/>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+		</properties>
+		
+	</persistence-unit>
+</persistence>

@@ -29,25 +29,25 @@ public class Place implements Serializable {
 	private String suburb;
 
 	//bi-directional many-to-one association to Address
-	@OneToMany(mappedBy="placeBean")
+	@OneToMany(mappedBy="place")
 	private List<Address> addresses;
 
 	//bi-directional many-to-one association to GeoCode
 	@ManyToOne
 	@JoinColumn(name="geocode")
-	private GeoCode geocodeBean;
+	private GeoCode geocode;
 
 	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="placeBean")
+	@OneToMany(mappedBy="place")
 	private List<CallApplication> callApplications;
 
 	//bi-directional many-to-one association to Province
 	@ManyToOne
 	@JoinColumn(name="province")
-	private Province provinceBean;
+	private Province province;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="placeBean")
+	@OneToMany(mappedBy="place")
 	private List<Project> projects;
 
 	public Place() {
@@ -103,24 +103,24 @@ public class Place implements Serializable {
 
 	public Address addAddress(Address address) {
 		getAddresses().add(address);
-		address.setPlaceBean(this);
+		address.setPlace(this);
 
 		return address;
 	}
 
 	public Address removeAddress(Address address) {
 		getAddresses().remove(address);
-		address.setPlaceBean(null);
+		address.setPlace(null);
 
 		return address;
 	}
 
-	public GeoCode getGeocodeBean() {
-		return this.geocodeBean;
+	public GeoCode getGeocode() {
+		return this.geocode;
 	}
 
-	public void setGeocodeBean(GeoCode geocodeBean) {
-		this.geocodeBean = geocodeBean;
+	public void setGeocode(GeoCode geocode) {
+		this.geocode = geocode;
 	}
 
 	public List<CallApplication> getCallApplications() {
@@ -133,24 +133,24 @@ public class Place implements Serializable {
 
 	public CallApplication addCallApplication(CallApplication callApplication) {
 		getCallApplications().add(callApplication);
-		callApplication.setPlaceBean(this);
+		callApplication.setPlace(this);
 
 		return callApplication;
 	}
 
 	public CallApplication removeCallApplication(CallApplication callApplication) {
 		getCallApplications().remove(callApplication);
-		callApplication.setPlaceBean(null);
+		callApplication.setPlace(null);
 
 		return callApplication;
 	}
 
-	public Province getProvinceBean() {
-		return this.provinceBean;
+	public Province getProvince() {
+		return this.province;
 	}
 
-	public void setProvinceBean(Province provinceBean) {
-		this.provinceBean = provinceBean;
+	public void setProvince(Province province) {
+		this.province = province;
 	}
 
 	public List<Project> getProjects() {
@@ -163,14 +163,14 @@ public class Place implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setPlaceBean(this);
+		project.setPlace(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setPlaceBean(null);
+		project.setPlace(null);
 
 		return project;
 	}

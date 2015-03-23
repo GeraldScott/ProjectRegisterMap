@@ -23,7 +23,7 @@ public class OrganisationType implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Organisation
-	@OneToMany(mappedBy="organisationTypeBean")
+	@OneToMany(mappedBy="organisationType")
 	private List<Organisation> organisations;
 
 	public OrganisationType() {
@@ -63,14 +63,14 @@ public class OrganisationType implements Serializable {
 
 	public Organisation addOrganisation(Organisation organisation) {
 		getOrganisations().add(organisation);
-		organisation.setOrganisationTypeBean(this);
+		organisation.setOrganisationType(this);
 
 		return organisation;
 	}
 
 	public Organisation removeOrganisation(Organisation organisation) {
 		getOrganisations().remove(organisation);
-		organisation.setOrganisationTypeBean(null);
+		organisation.setOrganisationType(null);
 
 		return organisation;
 	}

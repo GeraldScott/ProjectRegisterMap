@@ -29,12 +29,12 @@ public class ContactDetail implements Serializable {
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
 	@JoinColumn(name="organisation")
-	private Organisation organisationBean;
+	private Organisation organisation;
 
 	//bi-directional many-to-one association to Person
 	@ManyToOne
 	@JoinColumn(name="person")
-	private Person personBean;
+	private Person person;
 
 	public ContactDetail() {
 	}
@@ -71,20 +71,20 @@ public class ContactDetail implements Serializable {
 		this.workPhone = workPhone;
 	}
 
-	public Organisation getOrganisationBean() {
-		return this.organisationBean;
+	public Organisation getOrganisation() {
+		return this.organisation;
 	}
 
-	public void setOrganisationBean(Organisation organisationBean) {
-		this.organisationBean = organisationBean;
+	public void setOrganisation(Organisation organisation) {
+		this.organisation = organisation;
 	}
 
-	public Person getPersonBean() {
-		return this.personBean;
+	public Person getPerson() {
+		return this.person;
 	}
 
-	public void setPersonBean(Person personBean) {
-		this.personBean = personBean;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 }

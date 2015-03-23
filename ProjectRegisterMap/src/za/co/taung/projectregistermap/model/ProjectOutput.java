@@ -22,12 +22,12 @@ public class ProjectOutput implements Serializable {
 	//bi-directional many-to-one association to KeyPerformanceIndicator
 	@ManyToOne
 	@JoinColumn(name="key_performance_indicator")
-	private KeyPerformanceIndicator keyPerformanceIndicatorBean;
+	private KeyPerformanceIndicator keyPerformanceIndicator;
 
 	//bi-directional many-to-one association to Project
 	@ManyToOne
 	@JoinColumn(name="project")
-	private Project projectBean;
+	private Project project;
 
 	public ProjectOutput() {
 	}
@@ -48,20 +48,20 @@ public class ProjectOutput implements Serializable {
 		this.description = description;
 	}
 
-	public KeyPerformanceIndicator getKeyPerformanceIndicatorBean() {
-		return this.keyPerformanceIndicatorBean;
+	public KeyPerformanceIndicator getKeyPerformanceIndicator() {
+		return this.keyPerformanceIndicator;
 	}
 
-	public void setKeyPerformanceIndicatorBean(KeyPerformanceIndicator keyPerformanceIndicatorBean) {
-		this.keyPerformanceIndicatorBean = keyPerformanceIndicatorBean;
+	public void setKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
+		this.keyPerformanceIndicator = keyPerformanceIndicator;
 	}
 
-	public Project getProjectBean() {
-		return this.projectBean;
+	public Project getProject() {
+		return this.project;
 	}
 
-	public void setProjectBean(Project projectBean) {
-		this.projectBean = projectBean;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

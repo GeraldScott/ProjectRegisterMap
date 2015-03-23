@@ -28,7 +28,7 @@ public class GeoCode implements Serializable {
 	private String streetCode;
 
 	//bi-directional many-to-one association to Place
-	@OneToMany(mappedBy="geocodeBean")
+	@OneToMany(mappedBy="geocode")
 	private List<Place> places;
 
 	public GeoCode() {
@@ -84,14 +84,14 @@ public class GeoCode implements Serializable {
 
 	public Place addPlace(Place place) {
 		getPlaces().add(place);
-		place.setGeocodeBean(this);
+		place.setGeocode(this);
 
 		return place;
 	}
 
 	public Place removePlace(Place place) {
 		getPlaces().remove(place);
-		place.setGeocodeBean(null);
+		place.setGeocode(null);
 
 		return place;
 	}

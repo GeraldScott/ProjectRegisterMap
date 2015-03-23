@@ -33,21 +33,21 @@ public class Project implements Serializable {
 	private Timestamp startDate;
 
 	//bi-directional many-to-one association to ProjectExpense
-	@OneToMany(mappedBy="projectBean")
+	@OneToMany(mappedBy="project")
 	private List<ProjectExpense> projectExpenses;
 
 	//bi-directional many-to-one association to ProjectMilestone
-	@OneToMany(mappedBy="projectBean")
+	@OneToMany(mappedBy="project")
 	private List<ProjectMilestone> projectMilestones;
 
 	//bi-directional many-to-one association to ProjectOutput
-	@OneToMany(mappedBy="projectBean")
+	@OneToMany(mappedBy="project")
 	private List<ProjectOutput> projectOutputs;
 
 	//bi-directional many-to-one association to CallApplication
 	@ManyToOne
 	@JoinColumn(name="call_application")
-	private CallApplication callApplicationBean;
+	private CallApplication callApplication;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -62,17 +62,17 @@ public class Project implements Serializable {
 	//bi-directional many-to-one association to Place
 	@ManyToOne
 	@JoinColumn(name="place")
-	private Place placeBean;
+	private Place place;
 
 	//bi-directional many-to-one association to ProjectStatus
 	@ManyToOne
 	@JoinColumn(name="project_status")
-	private ProjectStatus projectStatusBean;
+	private ProjectStatus projectStatus;
 
 	//bi-directional many-to-one association to ProjectType
 	@ManyToOne
 	@JoinColumn(name="project_type")
-	private ProjectType projectTypeBean;
+	private ProjectType projectType;
 
 	public Project() {
 	}
@@ -135,14 +135,14 @@ public class Project implements Serializable {
 
 	public ProjectExpense addProjectExpens(ProjectExpense projectExpens) {
 		getProjectExpenses().add(projectExpens);
-		projectExpens.setProjectBean(this);
+		projectExpens.setProject(this);
 
 		return projectExpens;
 	}
 
 	public ProjectExpense removeProjectExpens(ProjectExpense projectExpens) {
 		getProjectExpenses().remove(projectExpens);
-		projectExpens.setProjectBean(null);
+		projectExpens.setProject(null);
 
 		return projectExpens;
 	}
@@ -157,14 +157,14 @@ public class Project implements Serializable {
 
 	public ProjectMilestone addProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().add(projectMilestone);
-		projectMilestone.setProjectBean(this);
+		projectMilestone.setProject(this);
 
 		return projectMilestone;
 	}
 
 	public ProjectMilestone removeProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().remove(projectMilestone);
-		projectMilestone.setProjectBean(null);
+		projectMilestone.setProject(null);
 
 		return projectMilestone;
 	}
@@ -179,24 +179,24 @@ public class Project implements Serializable {
 
 	public ProjectOutput addProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().add(projectOutput);
-		projectOutput.setProjectBean(this);
+		projectOutput.setProject(this);
 
 		return projectOutput;
 	}
 
 	public ProjectOutput removeProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().remove(projectOutput);
-		projectOutput.setProjectBean(null);
+		projectOutput.setProject(null);
 
 		return projectOutput;
 	}
 
-	public CallApplication getCallApplicationBean() {
-		return this.callApplicationBean;
+	public CallApplication getCallApplication() {
+		return this.callApplication;
 	}
 
-	public void setCallApplicationBean(CallApplication callApplicationBean) {
-		this.callApplicationBean = callApplicationBean;
+	public void setCallApplication(CallApplication callApplication) {
+		this.callApplication = callApplication;
 	}
 
 	public Organisation getOrganisation() {
@@ -215,28 +215,28 @@ public class Project implements Serializable {
 		this.person = person;
 	}
 
-	public Place getPlaceBean() {
-		return this.placeBean;
+	public Place getPlace() {
+		return this.place;
 	}
 
-	public void setPlaceBean(Place placeBean) {
-		this.placeBean = placeBean;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 
-	public ProjectStatus getProjectStatusBean() {
-		return this.projectStatusBean;
+	public ProjectStatus getProjectStatus() {
+		return this.projectStatus;
 	}
 
-	public void setProjectStatusBean(ProjectStatus projectStatusBean) {
-		this.projectStatusBean = projectStatusBean;
+	public void setProjectStatus(ProjectStatus projectStatus) {
+		this.projectStatus = projectStatus;
 	}
 
-	public ProjectType getProjectTypeBean() {
-		return this.projectTypeBean;
+	public ProjectType getProjectType() {
+		return this.projectType;
 	}
 
-	public void setProjectTypeBean(ProjectType projectTypeBean) {
-		this.projectTypeBean = projectTypeBean;
+	public void setProjectType(ProjectType projectType) {
+		this.projectType = projectType;
 	}
 
 }

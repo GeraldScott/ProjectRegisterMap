@@ -23,7 +23,7 @@ public class JobTitle implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to Person
-	@OneToMany(mappedBy="jobTitleBean")
+	@OneToMany(mappedBy="jobTitle")
 	private List<Person> persons;
 
 	public JobTitle() {
@@ -63,14 +63,14 @@ public class JobTitle implements Serializable {
 
 	public Person addPerson(Person person) {
 		getPersons().add(person);
-		person.setJobTitleBean(this);
+		person.setJobTitle(this);
 
 		return person;
 	}
 
 	public Person removePerson(Person person) {
 		getPersons().remove(person);
-		person.setJobTitleBean(null);
+		person.setJobTitle(null);
 
 		return person;
 	}

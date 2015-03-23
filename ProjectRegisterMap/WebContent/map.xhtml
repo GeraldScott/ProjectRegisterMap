@@ -1,20 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<script src="http://maps.google.com/maps/api/js?sensor=false"
-		type="text/javascript"></script>
-</h:head>
-<h:body>
-	<f:view contentType="text/html">
-		<h1>Projects of the Foundation for Human Rights</h1>
-		<p:gmap zoom="6" type="HYBRID" style="width:100%;height:600px"
-			center="#{projectMap.centre}" model="#{projectMap.simpleModel}" />
-	</f:view>
-</h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/masterLayout.xhtml">
 
-</html>
+    <ui:define name="head">
+        <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+    </ui:define>
+
+    <ui:define name="chapterItem">
+        <p:growl id="growl" showDetail="true"/>
+
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <p:gmap id="withMarkerSelect" 
+            	center="#{mapBean.centre}" 
+            	zoom="6" type="roadmap" style="width:1024px;height:704px" 
+            	model="#{mapBean.model}">
+                <p:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}" update="growl" />
+            </p:gmap>
+
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>

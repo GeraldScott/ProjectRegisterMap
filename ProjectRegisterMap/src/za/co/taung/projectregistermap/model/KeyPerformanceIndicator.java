@@ -31,16 +31,16 @@ public class KeyPerformanceIndicator implements Serializable {
 	private String target;
 
 	//bi-directional many-to-one association to Call
-	@OneToMany(mappedBy="keyPerformanceIndicatorBean")
+	@OneToMany(mappedBy="keyPerformanceIndicator")
 	private List<Call> calls;
 
 	//bi-directional many-to-one association to KeyResultArea
 	@ManyToOne
 	@JoinColumn(name="key_result_area")
-	private KeyResultArea keyResultAreaBean;
+	private KeyResultArea keyResultArea;
 
 	//bi-directional many-to-one association to ProjectOutput
-	@OneToMany(mappedBy="keyPerformanceIndicatorBean")
+	@OneToMany(mappedBy="keyPerformanceIndicator")
 	private List<ProjectOutput> projectOutputs;
 
 	public KeyPerformanceIndicator() {
@@ -112,24 +112,24 @@ public class KeyPerformanceIndicator implements Serializable {
 
 	public Call addCall(Call call) {
 		getCalls().add(call);
-		call.setKeyPerformanceIndicatorBean(this);
+		call.setKeyPerformanceIndicator(this);
 
 		return call;
 	}
 
 	public Call removeCall(Call call) {
 		getCalls().remove(call);
-		call.setKeyPerformanceIndicatorBean(null);
+		call.setKeyPerformanceIndicator(null);
 
 		return call;
 	}
 
-	public KeyResultArea getKeyResultAreaBean() {
-		return this.keyResultAreaBean;
+	public KeyResultArea getKeyResultArea() {
+		return this.keyResultArea;
 	}
 
-	public void setKeyResultAreaBean(KeyResultArea keyResultAreaBean) {
-		this.keyResultAreaBean = keyResultAreaBean;
+	public void setKeyResultArea(KeyResultArea keyResultArea) {
+		this.keyResultArea = keyResultArea;
 	}
 
 	public List<ProjectOutput> getProjectOutputs() {
@@ -142,14 +142,14 @@ public class KeyPerformanceIndicator implements Serializable {
 
 	public ProjectOutput addProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().add(projectOutput);
-		projectOutput.setKeyPerformanceIndicatorBean(this);
+		projectOutput.setKeyPerformanceIndicator(this);
 
 		return projectOutput;
 	}
 
 	public ProjectOutput removeProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().remove(projectOutput);
-		projectOutput.setKeyPerformanceIndicatorBean(null);
+		projectOutput.setKeyPerformanceIndicator(null);
 
 		return projectOutput;
 	}

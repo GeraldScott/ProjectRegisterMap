@@ -23,7 +23,7 @@ public class MilestoneType implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to ProjectMilestone
-	@OneToMany(mappedBy="milestoneTypeBean")
+	@OneToMany(mappedBy="milestoneType")
 	private List<ProjectMilestone> projectMilestones;
 
 	public MilestoneType() {
@@ -63,14 +63,14 @@ public class MilestoneType implements Serializable {
 
 	public ProjectMilestone addProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().add(projectMilestone);
-		projectMilestone.setMilestoneTypeBean(this);
+		projectMilestone.setMilestoneType(this);
 
 		return projectMilestone;
 	}
 
 	public ProjectMilestone removeProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().remove(projectMilestone);
-		projectMilestone.setMilestoneTypeBean(null);
+		projectMilestone.setMilestoneType(null);
 
 		return projectMilestone;
 	}

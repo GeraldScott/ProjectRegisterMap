@@ -23,7 +23,7 @@ public class ProjectStatus implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="projectStatusBean")
+	@OneToMany(mappedBy="projectStatus")
 	private List<Project> projects;
 
 	public ProjectStatus() {
@@ -63,14 +63,14 @@ public class ProjectStatus implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setProjectStatusBean(this);
+		project.setProjectStatus(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setProjectStatusBean(null);
+		project.setProjectStatus(null);
 
 		return project;
 	}

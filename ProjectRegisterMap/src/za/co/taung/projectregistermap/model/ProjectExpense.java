@@ -25,7 +25,7 @@ public class ProjectExpense implements Serializable {
 	//bi-directional many-to-one association to Project
 	@ManyToOne
 	@JoinColumn(name="project")
-	private Project projectBean;
+	private Project project;
 
 	public ProjectExpense() {
 	}
@@ -54,12 +54,12 @@ public class ProjectExpense implements Serializable {
 		this.paymentReference = paymentReference;
 	}
 
-	public Project getProjectBean() {
-		return this.projectBean;
+	public Project getProject() {
+		return this.project;
 	}
 
-	public void setProjectBean(Project projectBean) {
-		this.projectBean = projectBean;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

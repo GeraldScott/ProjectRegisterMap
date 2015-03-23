@@ -32,13 +32,13 @@ public class Organisation implements Serializable {
 	private String webSite;
 
 	//bi-directional many-to-one association to Address
-	@OneToMany(mappedBy="organisationBean")
+	@OneToMany(mappedBy="organisation")
 	private List<Address> addresses;
 
 	//bi-directional many-to-one association to OrganisationType
 	@ManyToOne
 	@JoinColumn(name="organisation_type")
-	private OrganisationType organisationTypeBean;
+	private OrganisationType organisationType;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -71,7 +71,7 @@ public class Organisation implements Serializable {
 	private List<CallApplication> callApplications;
 
 	//bi-directional many-to-one association to ContactDetail
-	@OneToMany(mappedBy="organisationBean")
+	@OneToMany(mappedBy="organisation")
 	private List<ContactDetail> contactDetails;
 
 	//bi-directional many-to-one association to Person
@@ -147,24 +147,24 @@ public class Organisation implements Serializable {
 
 	public Address addAddress(Address address) {
 		getAddresses().add(address);
-		address.setOrganisationBean(this);
+		address.setOrganisation(this);
 
 		return address;
 	}
 
 	public Address removeAddress(Address address) {
 		getAddresses().remove(address);
-		address.setOrganisationBean(null);
+		address.setOrganisation(null);
 
 		return address;
 	}
 
-	public OrganisationType getOrganisationTypeBean() {
-		return this.organisationTypeBean;
+	public OrganisationType getOrganisationType() {
+		return this.organisationType;
 	}
 
-	public void setOrganisationTypeBean(OrganisationType organisationTypeBean) {
-		this.organisationTypeBean = organisationTypeBean;
+	public void setOrganisationType(OrganisationType organisationType) {
+		this.organisationType = organisationType;
 	}
 
 	public Organisation getOrganisation1() {
@@ -303,14 +303,14 @@ public class Organisation implements Serializable {
 
 	public ContactDetail addContactDetail(ContactDetail contactDetail) {
 		getContactDetails().add(contactDetail);
-		contactDetail.setOrganisationBean(this);
+		contactDetail.setOrganisation(this);
 
 		return contactDetail;
 	}
 
 	public ContactDetail removeContactDetail(ContactDetail contactDetail) {
 		getContactDetails().remove(contactDetail);
-		contactDetail.setOrganisationBean(null);
+		contactDetail.setOrganisation(null);
 
 		return contactDetail;
 	}

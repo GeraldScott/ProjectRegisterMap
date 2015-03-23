@@ -23,7 +23,7 @@ public class Province implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Place
-	@OneToMany(mappedBy="provinceBean")
+	@OneToMany(mappedBy="province")
 	private List<Place> places;
 
 	public Province() {
@@ -63,14 +63,14 @@ public class Province implements Serializable {
 
 	public Place addPlace(Place place) {
 		getPlaces().add(place);
-		place.setProvinceBean(this);
+		place.setProvince(this);
 
 		return place;
 	}
 
 	public Place removePlace(Place place) {
 		getPlaces().remove(place);
-		place.setProvinceBean(null);
+		place.setProvince(null);
 
 		return place;
 	}

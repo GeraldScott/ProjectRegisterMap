@@ -24,12 +24,12 @@ public class ProjectMilestone implements Serializable {
 	//bi-directional many-to-one association to MilestoneType
 	@ManyToOne
 	@JoinColumn(name="milestone_type")
-	private MilestoneType milestoneTypeBean;
+	private MilestoneType milestoneType;
 
 	//bi-directional many-to-one association to Project
 	@ManyToOne
 	@JoinColumn(name="project")
-	private Project projectBean;
+	private Project project;
 
 	public ProjectMilestone() {
 	}
@@ -50,20 +50,20 @@ public class ProjectMilestone implements Serializable {
 		this.milestoneDate = milestoneDate;
 	}
 
-	public MilestoneType getMilestoneTypeBean() {
-		return this.milestoneTypeBean;
+	public MilestoneType getMilestoneType() {
+		return this.milestoneType;
 	}
 
-	public void setMilestoneTypeBean(MilestoneType milestoneTypeBean) {
-		this.milestoneTypeBean = milestoneTypeBean;
+	public void setMilestoneType(MilestoneType milestoneType) {
+		this.milestoneType = milestoneType;
 	}
 
-	public Project getProjectBean() {
-		return this.projectBean;
+	public Project getProject() {
+		return this.project;
 	}
 
-	public void setProjectBean(Project projectBean) {
-		this.projectBean = projectBean;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

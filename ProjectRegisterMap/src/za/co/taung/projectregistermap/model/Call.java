@@ -33,13 +33,13 @@ public class Call implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="callBean")
+	@OneToMany(mappedBy="call")
 	private List<CallApplication> callApplications;
 
 	//bi-directional many-to-one association to KeyPerformanceIndicator
 	@ManyToOne
 	@JoinColumn(name="key_performance_indicator")
-	private KeyPerformanceIndicator keyPerformanceIndicatorBean;
+	private KeyPerformanceIndicator keyPerformanceIndicator;
 
 	public Call() {
 	}
@@ -102,24 +102,24 @@ public class Call implements Serializable {
 
 	public CallApplication addCallApplication(CallApplication callApplication) {
 		getCallApplications().add(callApplication);
-		callApplication.setCallBean(this);
+		callApplication.setCall(this);
 
 		return callApplication;
 	}
 
 	public CallApplication removeCallApplication(CallApplication callApplication) {
 		getCallApplications().remove(callApplication);
-		callApplication.setCallBean(null);
+		callApplication.setCall(null);
 
 		return callApplication;
 	}
 
-	public KeyPerformanceIndicator getKeyPerformanceIndicatorBean() {
-		return this.keyPerformanceIndicatorBean;
+	public KeyPerformanceIndicator getKeyPerformanceIndicator() {
+		return this.keyPerformanceIndicator;
 	}
 
-	public void setKeyPerformanceIndicatorBean(KeyPerformanceIndicator keyPerformanceIndicatorBean) {
-		this.keyPerformanceIndicatorBean = keyPerformanceIndicatorBean;
+	public void setKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
+		this.keyPerformanceIndicator = keyPerformanceIndicator;
 	}
 
 }

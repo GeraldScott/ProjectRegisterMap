@@ -30,12 +30,12 @@ public class CallApplication implements Serializable {
 	//bi-directional many-to-one association to CallApplicationStatus
 	@ManyToOne
 	@JoinColumn(name="call_application_status")
-	private CallApplicationStatus callApplicationStatusBean;
+	private CallApplicationStatus callApplicationStatus;
 
 	//bi-directional many-to-one association to Call
 	@ManyToOne
 	@JoinColumn(name="call")
-	private Call callBean;
+	private Call call;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -45,14 +45,14 @@ public class CallApplication implements Serializable {
 	//bi-directional many-to-one association to Place
 	@ManyToOne
 	@JoinColumn(name="place")
-	private Place placeBean;
+	private Place place;
 
 	//bi-directional many-to-one association to CallEvaluation
-	@OneToMany(mappedBy="callApplicationBean")
+	@OneToMany(mappedBy="callApplication")
 	private List<CallEvaluation> callEvaluations;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="callApplicationBean")
+	@OneToMany(mappedBy="callApplication")
 	private List<Project> projects;
 
 	public CallApplication() {
@@ -98,20 +98,20 @@ public class CallApplication implements Serializable {
 		this.score = score;
 	}
 
-	public CallApplicationStatus getCallApplicationStatusBean() {
-		return this.callApplicationStatusBean;
+	public CallApplicationStatus getCallApplicationStatus() {
+		return this.callApplicationStatus;
 	}
 
-	public void setCallApplicationStatusBean(CallApplicationStatus callApplicationStatusBean) {
-		this.callApplicationStatusBean = callApplicationStatusBean;
+	public void setCallApplicationStatus(CallApplicationStatus callApplicationStatus) {
+		this.callApplicationStatus = callApplicationStatus;
 	}
 
-	public Call getCallBean() {
-		return this.callBean;
+	public Call getCall() {
+		return this.call;
 	}
 
-	public void setCallBean(Call callBean) {
-		this.callBean = callBean;
+	public void setCall(Call call) {
+		this.call = call;
 	}
 
 	public Organisation getOrganisation() {
@@ -122,12 +122,12 @@ public class CallApplication implements Serializable {
 		this.organisation = organisation;
 	}
 
-	public Place getPlaceBean() {
-		return this.placeBean;
+	public Place getPlace() {
+		return this.place;
 	}
 
-	public void setPlaceBean(Place placeBean) {
-		this.placeBean = placeBean;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 
 	public List<CallEvaluation> getCallEvaluations() {
@@ -140,14 +140,14 @@ public class CallApplication implements Serializable {
 
 	public CallEvaluation addCallEvaluation(CallEvaluation callEvaluation) {
 		getCallEvaluations().add(callEvaluation);
-		callEvaluation.setCallApplicationBean(this);
+		callEvaluation.setCallApplication(this);
 
 		return callEvaluation;
 	}
 
 	public CallEvaluation removeCallEvaluation(CallEvaluation callEvaluation) {
 		getCallEvaluations().remove(callEvaluation);
-		callEvaluation.setCallApplicationBean(null);
+		callEvaluation.setCallApplication(null);
 
 		return callEvaluation;
 	}
@@ -162,14 +162,14 @@ public class CallApplication implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setCallApplicationBean(this);
+		project.setCallApplication(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setCallApplicationBean(null);
+		project.setCallApplication(null);
 
 		return project;
 	}

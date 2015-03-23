@@ -28,7 +28,7 @@ public class CallEvaluation implements Serializable {
 	//bi-directional many-to-one association to CallApplication
 	@ManyToOne
 	@JoinColumn(name="call_application")
-	private CallApplication callApplicationBean;
+	private CallApplication callApplication;
 
 	//bi-directional many-to-one association to Person
 	@ManyToOne
@@ -70,12 +70,12 @@ public class CallEvaluation implements Serializable {
 		this.score = score;
 	}
 
-	public CallApplication getCallApplicationBean() {
-		return this.callApplicationBean;
+	public CallApplication getCallApplication() {
+		return this.callApplication;
 	}
 
-	public void setCallApplicationBean(CallApplication callApplicationBean) {
-		this.callApplicationBean = callApplicationBean;
+	public void setCallApplication(CallApplication callApplication) {
+		this.callApplication = callApplication;
 	}
 
 	public Person getPerson() {

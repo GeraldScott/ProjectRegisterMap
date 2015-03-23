@@ -32,13 +32,13 @@ public class Person implements Serializable {
 	private List<CallEvaluation> callEvaluations;
 
 	//bi-directional many-to-one association to ContactDetail
-	@OneToMany(mappedBy="personBean")
+	@OneToMany(mappedBy="person")
 	private List<ContactDetail> contactDetails;
 
 	//bi-directional many-to-one association to JobTitle
 	@ManyToOne
 	@JoinColumn(name="job_title")
-	private JobTitle jobTitleBean;
+	private JobTitle jobTitle;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -116,24 +116,24 @@ public class Person implements Serializable {
 
 	public ContactDetail addContactDetail(ContactDetail contactDetail) {
 		getContactDetails().add(contactDetail);
-		contactDetail.setPersonBean(this);
+		contactDetail.setPerson(this);
 
 		return contactDetail;
 	}
 
 	public ContactDetail removeContactDetail(ContactDetail contactDetail) {
 		getContactDetails().remove(contactDetail);
-		contactDetail.setPersonBean(null);
+		contactDetail.setPerson(null);
 
 		return contactDetail;
 	}
 
-	public JobTitle getJobTitleBean() {
-		return this.jobTitleBean;
+	public JobTitle getJobTitle() {
+		return this.jobTitle;
 	}
 
-	public void setJobTitleBean(JobTitle jobTitleBean) {
-		this.jobTitleBean = jobTitleBean;
+	public void setJobTitle(JobTitle jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
 	public Organisation getOrganisation() {

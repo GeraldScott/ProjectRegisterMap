@@ -32,7 +32,7 @@ public class Programme implements Serializable {
 	private Timestamp startDate;
 
 	//bi-directional many-to-one association to KeyResultArea
-	@OneToMany(mappedBy="programmeBean")
+	@OneToMany(mappedBy="programme")
 	private List<KeyResultArea> keyResultAreas;
 
 	//bi-directional many-to-one association to Organisation
@@ -101,14 +101,14 @@ public class Programme implements Serializable {
 
 	public KeyResultArea addKeyResultArea(KeyResultArea keyResultArea) {
 		getKeyResultAreas().add(keyResultArea);
-		keyResultArea.setProgrammeBean(this);
+		keyResultArea.setProgramme(this);
 
 		return keyResultArea;
 	}
 
 	public KeyResultArea removeKeyResultArea(KeyResultArea keyResultArea) {
 		getKeyResultAreas().remove(keyResultArea);
-		keyResultArea.setProgrammeBean(null);
+		keyResultArea.setProgramme(null);
 
 		return keyResultArea;
 	}

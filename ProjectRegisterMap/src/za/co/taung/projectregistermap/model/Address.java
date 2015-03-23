@@ -28,17 +28,17 @@ public class Address implements Serializable {
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
 	@JoinColumn(name="organisation")
-	private Organisation organisationBean;
+	private Organisation organisation;
 
 	//bi-directional many-to-one association to Place
 	@ManyToOne
 	@JoinColumn(name="place")
-	private Place placeBean;
+	private Place place;
 
 	//bi-directional many-to-one association to AddressType
 	@ManyToOne
 	@JoinColumn(name="address_type")
-	private AddressType addressTypeBean;
+	private AddressType addressType;
 
 	public Address() {
 	}
@@ -75,28 +75,28 @@ public class Address implements Serializable {
 		this.suburb = suburb;
 	}
 
-	public Organisation getOrganisationBean() {
-		return this.organisationBean;
+	public Organisation getOrganisation() {
+		return this.organisation;
 	}
 
-	public void setOrganisationBean(Organisation organisationBean) {
-		this.organisationBean = organisationBean;
+	public void setOrganisation(Organisation organisation) {
+		this.organisation = organisation;
 	}
 
-	public Place getPlaceBean() {
-		return this.placeBean;
+	public Place getPlace() {
+		return this.place;
 	}
 
-	public void setPlaceBean(Place placeBean) {
-		this.placeBean = placeBean;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 
-	public AddressType getAddressTypeBean() {
-		return this.addressTypeBean;
+	public AddressType getAddressType() {
+		return this.addressType;
 	}
 
-	public void setAddressTypeBean(AddressType addressTypeBean) {
-		this.addressTypeBean = addressTypeBean;
+	public void setAddressType(AddressType addressType) {
+		this.addressType = addressType;
 	}
 
 }

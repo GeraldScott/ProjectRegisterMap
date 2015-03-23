@@ -23,7 +23,7 @@ public class ProjectType implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="projectTypeBean")
+	@OneToMany(mappedBy="projectType")
 	private List<Project> projects;
 
 	public ProjectType() {
@@ -63,14 +63,14 @@ public class ProjectType implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setProjectTypeBean(this);
+		project.setProjectType(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setProjectTypeBean(null);
+		project.setProjectType(null);
 
 		return project;
 	}

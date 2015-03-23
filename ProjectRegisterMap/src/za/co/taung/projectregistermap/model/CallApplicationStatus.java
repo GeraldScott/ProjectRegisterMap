@@ -23,7 +23,7 @@ public class CallApplicationStatus implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="callApplicationStatusBean")
+	@OneToMany(mappedBy="callApplicationStatus")
 	private List<CallApplication> callApplications;
 
 	public CallApplicationStatus() {
@@ -63,14 +63,14 @@ public class CallApplicationStatus implements Serializable {
 
 	public CallApplication addCallApplication(CallApplication callApplication) {
 		getCallApplications().add(callApplication);
-		callApplication.setCallApplicationStatusBean(this);
+		callApplication.setCallApplicationStatus(this);
 
 		return callApplication;
 	}
 
 	public CallApplication removeCallApplication(CallApplication callApplication) {
 		getCallApplications().remove(callApplication);
-		callApplication.setCallApplicationStatusBean(null);
+		callApplication.setCallApplicationStatus(null);
 
 		return callApplication;
 	}

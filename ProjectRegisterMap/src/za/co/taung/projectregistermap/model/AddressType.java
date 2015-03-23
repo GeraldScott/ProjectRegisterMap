@@ -23,7 +23,7 @@ public class AddressType implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Address
-	@OneToMany(mappedBy="addressTypeBean")
+	@OneToMany(mappedBy="addressType")
 	private List<Address> addresses;
 
 	public AddressType() {
@@ -63,14 +63,14 @@ public class AddressType implements Serializable {
 
 	public Address addAddress(Address address) {
 		getAddresses().add(address);
-		address.setAddressTypeBean(this);
+		address.setAddressType(this);
 
 		return address;
 	}
 
 	public Address removeAddress(Address address) {
 		getAddresses().remove(address);
-		address.setAddressTypeBean(null);
+		address.setAddressType(null);
 
 		return address;
 	}

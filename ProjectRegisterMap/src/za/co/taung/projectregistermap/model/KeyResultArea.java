@@ -23,13 +23,13 @@ public class KeyResultArea implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to KeyPerformanceIndicator
-	@OneToMany(mappedBy="keyResultAreaBean")
+	@OneToMany(mappedBy="keyResultArea")
 	private List<KeyPerformanceIndicator> keyPerformanceIndicators;
 
 	//bi-directional many-to-one association to Programme
 	@ManyToOne
 	@JoinColumn(name="programme")
-	private Programme programmeBean;
+	private Programme programme;
 
 	public KeyResultArea() {
 	}
@@ -68,24 +68,24 @@ public class KeyResultArea implements Serializable {
 
 	public KeyPerformanceIndicator addKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
 		getKeyPerformanceIndicators().add(keyPerformanceIndicator);
-		keyPerformanceIndicator.setKeyResultAreaBean(this);
+		keyPerformanceIndicator.setKeyResultArea(this);
 
 		return keyPerformanceIndicator;
 	}
 
 	public KeyPerformanceIndicator removeKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
 		getKeyPerformanceIndicators().remove(keyPerformanceIndicator);
-		keyPerformanceIndicator.setKeyResultAreaBean(null);
+		keyPerformanceIndicator.setKeyResultArea(null);
 
 		return keyPerformanceIndicator;
 	}
 
-	public Programme getProgrammeBean() {
-		return this.programmeBean;
+	public Programme getProgramme() {
+		return this.programme;
 	}
 
-	public void setProgrammeBean(Programme programmeBean) {
-		this.programmeBean = programmeBean;
+	public void setProgramme(Programme programme) {
+		this.programme = programme;
 	}
 
 }

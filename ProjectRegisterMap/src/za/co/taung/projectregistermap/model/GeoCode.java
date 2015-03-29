@@ -16,6 +16,8 @@ public class GeoCode implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="GEOCODES_ID_GENERATOR", sequenceName="GEOCODES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GEOCODES_ID_GENERATOR")
 	private Integer id;
 
 	private double latitude;
@@ -24,11 +26,11 @@ public class GeoCode implements Serializable {
 
 	private String name;
 
-	@Column(name="street_code")
-	private String streetCode;
+	@Column(name="post_code")
+	private String postCode;
 
 	//bi-directional many-to-one association to Place
-	@OneToMany(mappedBy="geocode")
+	@OneToMany(mappedBy="geocodeBean")
 	private List<Place> places;
 
 	public GeoCode() {
@@ -66,12 +68,12 @@ public class GeoCode implements Serializable {
 		this.name = name;
 	}
 
-	public String getStreetCode() {
-		return this.streetCode;
+	public String getPostCode() {
+		return this.postCode;
 	}
 
-	public void setStreetCode(String streetCode) {
-		this.streetCode = streetCode;
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
 	}
 
 	public List<Place> getPlaces() {
@@ -84,14 +86,14 @@ public class GeoCode implements Serializable {
 
 	public Place addPlace(Place place) {
 		getPlaces().add(place);
-		place.setGeocode(this);
+		place.setGeocodeBean(this);
 
 		return place;
 	}
 
 	public Place removePlace(Place place) {
 		getPlaces().remove(place);
-		place.setGeocode(null);
+		place.setGeocodeBean(null);
 
 		return place;
 	}

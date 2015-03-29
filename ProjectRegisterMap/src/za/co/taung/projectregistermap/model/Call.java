@@ -2,7 +2,7 @@ package za.co.taung.projectregistermap.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,29 +17,43 @@ public class Call implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="CALLS_ID_GENERATOR", sequenceName="CALLS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CALLS_ID_GENERATOR")
 	private Integer id;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name="call_date")
-	private Timestamp callDate;
+	private Date callDate;
 
-	@Column(name="call_reference")
-	private String callReference;
+	@Column(name="call_number")
+	private String callNumber;
 
 	private String description;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name="evaluation_date")
-	private Timestamp evaluationDate;
+	private Date evaluationDate;
 
-	private String name;
+	private String title;
 
 	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="call")
+	@OneToMany(mappedBy="callBean")
 	private List<CallApplication> callApplications;
 
 	//bi-directional many-to-one association to KeyPerformanceIndicator
 	@ManyToOne
 	@JoinColumn(name="key_performance_indicator")
-	private KeyPerformanceIndicator keyPerformanceIndicator;
+	private KeyPerformanceIndicator keyPerformanceIndicatorBean;
+
+	//bi-directional many-to-one association to KeyResultArea
+	@ManyToOne
+	@JoinColumn(name="key_result_area")
+	private KeyResultArea keyResultAreaBean;
+
+	//bi-directional many-to-one association to Programme
+	@ManyToOne
+	@JoinColumn(name="programme")
+	private Programme programmeBean;
 
 	public Call() {
 	}
@@ -52,20 +66,20 @@ public class Call implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getCallDate() {
+	public Date getCallDate() {
 		return this.callDate;
 	}
 
-	public void setCallDate(Timestamp callDate) {
+	public void setCallDate(Date callDate) {
 		this.callDate = callDate;
 	}
 
-	public String getCallReference() {
-		return this.callReference;
+	public String getCallNumber() {
+		return this.callNumber;
 	}
 
-	public void setCallReference(String callReference) {
-		this.callReference = callReference;
+	public void setCallNumber(String callNumber) {
+		this.callNumber = callNumber;
 	}
 
 	public String getDescription() {
@@ -76,20 +90,20 @@ public class Call implements Serializable {
 		this.description = description;
 	}
 
-	public Timestamp getEvaluationDate() {
+	public Date getEvaluationDate() {
 		return this.evaluationDate;
 	}
 
-	public void setEvaluationDate(Timestamp evaluationDate) {
+	public void setEvaluationDate(Date evaluationDate) {
 		this.evaluationDate = evaluationDate;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public List<CallApplication> getCallApplications() {
@@ -102,24 +116,40 @@ public class Call implements Serializable {
 
 	public CallApplication addCallApplication(CallApplication callApplication) {
 		getCallApplications().add(callApplication);
-		callApplication.setCall(this);
+		callApplication.setCallBean(this);
 
 		return callApplication;
 	}
 
 	public CallApplication removeCallApplication(CallApplication callApplication) {
 		getCallApplications().remove(callApplication);
-		callApplication.setCall(null);
+		callApplication.setCallBean(null);
 
 		return callApplication;
 	}
 
-	public KeyPerformanceIndicator getKeyPerformanceIndicator() {
-		return this.keyPerformanceIndicator;
+	public KeyPerformanceIndicator getKeyPerformanceIndicatorBean() {
+		return this.keyPerformanceIndicatorBean;
 	}
 
-	public void setKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
-		this.keyPerformanceIndicator = keyPerformanceIndicator;
+	public void setKeyPerformanceIndicatorBean(KeyPerformanceIndicator keyPerformanceIndicatorBean) {
+		this.keyPerformanceIndicatorBean = keyPerformanceIndicatorBean;
+	}
+
+	public KeyResultArea getKeyResultAreaBean() {
+		return this.keyResultAreaBean;
+	}
+
+	public void setKeyResultAreaBean(KeyResultArea keyResultAreaBean) {
+		this.keyResultAreaBean = keyResultAreaBean;
+	}
+
+	public Programme getProgrammeBean() {
+		return this.programmeBean;
+	}
+
+	public void setProgrammeBean(Programme programmeBean) {
+		this.programmeBean = programmeBean;
 	}
 
 }

@@ -16,14 +16,18 @@ public class MilestoneType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="MILESTONE_TYPES_ID_GENERATOR", sequenceName="MILESTONE_TYPES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MILESTONE_TYPES_ID_GENERATOR")
 	private Integer id;
+
+	private String code;
 
 	private String description;
 
 	private String type;
 
 	//bi-directional many-to-one association to ProjectMilestone
-	@OneToMany(mappedBy="milestoneType")
+	@OneToMany(mappedBy="milestoneTypeBean")
 	private List<ProjectMilestone> projectMilestones;
 
 	public MilestoneType() {
@@ -35,6 +39,14 @@ public class MilestoneType implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDescription() {
@@ -63,14 +75,14 @@ public class MilestoneType implements Serializable {
 
 	public ProjectMilestone addProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().add(projectMilestone);
-		projectMilestone.setMilestoneType(this);
+		projectMilestone.setMilestoneTypeBean(this);
 
 		return projectMilestone;
 	}
 
 	public ProjectMilestone removeProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().remove(projectMilestone);
-		projectMilestone.setMilestoneType(null);
+		projectMilestone.setMilestoneTypeBean(null);
 
 		return projectMilestone;
 	}

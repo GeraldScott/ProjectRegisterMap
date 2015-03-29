@@ -16,6 +16,8 @@ public class Organisation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="ORGANISATIONS_ID_GENERATOR", sequenceName="ORGANISATIONS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ORGANISATIONS_ID_GENERATOR")
 	private Integer id;
 
 	private String code;
@@ -32,13 +34,29 @@ public class Organisation implements Serializable {
 	private String webSite;
 
 	//bi-directional many-to-one association to Address
-	@OneToMany(mappedBy="organisation")
+	@OneToMany(mappedBy="organisationBean")
 	private List<Address> addresses;
+
+	//bi-directional many-to-one association to BankAccount
+	@OneToMany(mappedBy="organisation1")
+	private List<BankAccount> bankAccounts1;
+
+	//bi-directional many-to-one association to BankAccount
+	@OneToMany(mappedBy="organisation2")
+	private List<BankAccount> bankAccounts2;
+
+	//bi-directional many-to-one association to CallApplication
+	@OneToMany(mappedBy="organisation")
+	private List<CallApplication> callApplications;
+
+	//bi-directional many-to-one association to ContactDetail
+	@OneToMany(mappedBy="organisationBean")
+	private List<ContactDetail> contactDetails;
 
 	//bi-directional many-to-one association to OrganisationType
 	@ManyToOne
 	@JoinColumn(name="organisation_type")
-	private OrganisationType organisationType;
+	private OrganisationType organisationTypeBean;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -58,22 +76,6 @@ public class Organisation implements Serializable {
 	@OneToMany(mappedBy="organisation2")
 	private List<Organisation> organisations2;
 
-	//bi-directional many-to-one association to BankAccount
-	@OneToMany(mappedBy="organisation1")
-	private List<BankAccount> bankAccounts1;
-
-	//bi-directional many-to-one association to BankAccount
-	@OneToMany(mappedBy="organisation2")
-	private List<BankAccount> bankAccounts2;
-
-	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="organisation")
-	private List<CallApplication> callApplications;
-
-	//bi-directional many-to-one association to ContactDetail
-	@OneToMany(mappedBy="organisation")
-	private List<ContactDetail> contactDetails;
-
 	//bi-directional many-to-one association to Person
 	@OneToMany(mappedBy="organisation")
 	private List<Person> persons;
@@ -85,6 +87,11 @@ public class Organisation implements Serializable {
 	//bi-directional many-to-one association to Project
 	@OneToMany(mappedBy="organisation")
 	private List<Project> projects;
+
+	//bi-directional many-to-one association to OrganisationStatus
+	@ManyToOne
+	@JoinColumn(name="organisation_status")
+	private OrganisationStatus organisationStatusBean;
 
 	public Organisation() {
 	}
@@ -147,84 +154,16 @@ public class Organisation implements Serializable {
 
 	public Address addAddress(Address address) {
 		getAddresses().add(address);
-		address.setOrganisation(this);
+		address.setOrganisationBean(this);
 
 		return address;
 	}
 
 	public Address removeAddress(Address address) {
 		getAddresses().remove(address);
-		address.setOrganisation(null);
+		address.setOrganisationBean(null);
 
 		return address;
-	}
-
-	public OrganisationType getOrganisationType() {
-		return this.organisationType;
-	}
-
-	public void setOrganisationType(OrganisationType organisationType) {
-		this.organisationType = organisationType;
-	}
-
-	public Organisation getOrganisation1() {
-		return this.organisation1;
-	}
-
-	public void setOrganisation1(Organisation organisation1) {
-		this.organisation1 = organisation1;
-	}
-
-	public List<Organisation> getOrganisations1() {
-		return this.organisations1;
-	}
-
-	public void setOrganisations1(List<Organisation> organisations1) {
-		this.organisations1 = organisations1;
-	}
-
-	public Organisation addOrganisations1(Organisation organisations1) {
-		getOrganisations1().add(organisations1);
-		organisations1.setOrganisation1(this);
-
-		return organisations1;
-	}
-
-	public Organisation removeOrganisations1(Organisation organisations1) {
-		getOrganisations1().remove(organisations1);
-		organisations1.setOrganisation1(null);
-
-		return organisations1;
-	}
-
-	public Organisation getOrganisation2() {
-		return this.organisation2;
-	}
-
-	public void setOrganisation2(Organisation organisation2) {
-		this.organisation2 = organisation2;
-	}
-
-	public List<Organisation> getOrganisations2() {
-		return this.organisations2;
-	}
-
-	public void setOrganisations2(List<Organisation> organisations2) {
-		this.organisations2 = organisations2;
-	}
-
-	public Organisation addOrganisations2(Organisation organisations2) {
-		getOrganisations2().add(organisations2);
-		organisations2.setOrganisation2(this);
-
-		return organisations2;
-	}
-
-	public Organisation removeOrganisations2(Organisation organisations2) {
-		getOrganisations2().remove(organisations2);
-		organisations2.setOrganisation2(null);
-
-		return organisations2;
 	}
 
 	public List<BankAccount> getBankAccounts1() {
@@ -303,16 +242,84 @@ public class Organisation implements Serializable {
 
 	public ContactDetail addContactDetail(ContactDetail contactDetail) {
 		getContactDetails().add(contactDetail);
-		contactDetail.setOrganisation(this);
+		contactDetail.setOrganisationBean(this);
 
 		return contactDetail;
 	}
 
 	public ContactDetail removeContactDetail(ContactDetail contactDetail) {
 		getContactDetails().remove(contactDetail);
-		contactDetail.setOrganisation(null);
+		contactDetail.setOrganisationBean(null);
 
 		return contactDetail;
+	}
+
+	public OrganisationType getOrganisationTypeBean() {
+		return this.organisationTypeBean;
+	}
+
+	public void setOrganisationTypeBean(OrganisationType organisationTypeBean) {
+		this.organisationTypeBean = organisationTypeBean;
+	}
+
+	public Organisation getOrganisation1() {
+		return this.organisation1;
+	}
+
+	public void setOrganisation1(Organisation organisation1) {
+		this.organisation1 = organisation1;
+	}
+
+	public List<Organisation> getOrganisations1() {
+		return this.organisations1;
+	}
+
+	public void setOrganisations1(List<Organisation> organisations1) {
+		this.organisations1 = organisations1;
+	}
+
+	public Organisation addOrganisations1(Organisation organisations1) {
+		getOrganisations1().add(organisations1);
+		organisations1.setOrganisation1(this);
+
+		return organisations1;
+	}
+
+	public Organisation removeOrganisations1(Organisation organisations1) {
+		getOrganisations1().remove(organisations1);
+		organisations1.setOrganisation1(null);
+
+		return organisations1;
+	}
+
+	public Organisation getOrganisation2() {
+		return this.organisation2;
+	}
+
+	public void setOrganisation2(Organisation organisation2) {
+		this.organisation2 = organisation2;
+	}
+
+	public List<Organisation> getOrganisations2() {
+		return this.organisations2;
+	}
+
+	public void setOrganisations2(List<Organisation> organisations2) {
+		this.organisations2 = organisations2;
+	}
+
+	public Organisation addOrganisations2(Organisation organisations2) {
+		getOrganisations2().add(organisations2);
+		organisations2.setOrganisation2(this);
+
+		return organisations2;
+	}
+
+	public Organisation removeOrganisations2(Organisation organisations2) {
+		getOrganisations2().remove(organisations2);
+		organisations2.setOrganisation2(null);
+
+		return organisations2;
 	}
 
 	public List<Person> getPersons() {
@@ -379,6 +386,14 @@ public class Organisation implements Serializable {
 		project.setOrganisation(null);
 
 		return project;
+	}
+
+	public OrganisationStatus getOrganisationStatusBean() {
+		return this.organisationStatusBean;
+	}
+
+	public void setOrganisationStatusBean(OrganisationStatus organisationStatusBean) {
+		this.organisationStatusBean = organisationStatusBean;
 	}
 
 }

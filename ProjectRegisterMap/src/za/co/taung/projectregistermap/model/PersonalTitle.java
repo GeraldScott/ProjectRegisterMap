@@ -6,18 +6,18 @@ import java.util.List;
 
 
 /**
- * The persistent class for the job_titles database table.
+ * The persistent class for the personal_titles database table.
  * 
  */
 @Entity
-@Table(name="job_titles")
-@NamedQuery(name="JobTitle.findAll", query="SELECT j FROM JobTitle j")
-public class JobTitle implements Serializable {
+@Table(name="personal_titles")
+@NamedQuery(name="PersonalTitle.findAll", query="SELECT p FROM PersonalTitle p")
+public class PersonalTitle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="JOB_TITLES_ID_GENERATOR", sequenceName="JOB_TITLES_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="JOB_TITLES_ID_GENERATOR")
+	@SequenceGenerator(name="PERSONAL_TITLES_ID_GENERATOR", sequenceName="PERSONAL_TITLES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PERSONAL_TITLES_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
@@ -25,10 +25,10 @@ public class JobTitle implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to Person
-	@OneToMany(mappedBy="jobTitleBean")
+	@OneToMany(mappedBy="personalTitleBean")
 	private List<Person> persons;
 
-	public JobTitle() {
+	public PersonalTitle() {
 	}
 
 	public Integer getId() {
@@ -65,14 +65,14 @@ public class JobTitle implements Serializable {
 
 	public Person addPerson(Person person) {
 		getPersons().add(person);
-		person.setJobTitleBean(this);
+		person.setPersonalTitleBean(this);
 
 		return person;
 	}
 
 	public Person removePerson(Person person) {
 		getPersons().remove(person);
-		person.setJobTitleBean(null);
+		person.setPersonalTitleBean(null);
 
 		return person;
 	}

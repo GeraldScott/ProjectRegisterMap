@@ -16,6 +16,8 @@ public class ProjectStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PROJECT_STATUSES_ID_GENERATOR", sequenceName="PROJECT_STATUSES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROJECT_STATUSES_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
@@ -23,7 +25,7 @@ public class ProjectStatus implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="projectStatus")
+	@OneToMany(mappedBy="projectStatusBean")
 	private List<Project> projects;
 
 	public ProjectStatus() {
@@ -63,14 +65,14 @@ public class ProjectStatus implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setProjectStatus(this);
+		project.setProjectStatusBean(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setProjectStatus(null);
+		project.setProjectStatusBean(null);
 
 		return project;
 	}

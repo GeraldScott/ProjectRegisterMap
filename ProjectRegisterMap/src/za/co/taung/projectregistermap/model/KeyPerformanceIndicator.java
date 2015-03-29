@@ -16,32 +16,39 @@ public class KeyPerformanceIndicator implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="KEY_PERFORMANCE_INDICATORS_ID_GENERATOR", sequenceName="KEY_PERFORMANCE_INDICATORS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="KEY_PERFORMANCE_INDICATORS_ID_GENERATOR")
 	private Integer id;
 
-	private String actual;
-
-	private String baseline;
+	private String code;
 
 	private String description;
 
-	private String name;
-
-	private String remarks;
-
-	private String target;
-
 	//bi-directional many-to-one association to Call
-	@OneToMany(mappedBy="keyPerformanceIndicator")
+	@OneToMany(mappedBy="keyPerformanceIndicatorBean")
 	private List<Call> calls;
 
 	//bi-directional many-to-one association to KeyResultArea
 	@ManyToOne
 	@JoinColumn(name="key_result_area")
-	private KeyResultArea keyResultArea;
+	private KeyResultArea keyResultAreaBean;
+
+	//bi-directional many-to-one association to Programme
+	@ManyToOne
+	@JoinColumn(name="programme")
+	private Programme programmeBean;
 
 	//bi-directional many-to-one association to ProjectOutput
-	@OneToMany(mappedBy="keyPerformanceIndicator")
+	@OneToMany(mappedBy="keyPerformanceIndicatorBean")
 	private List<ProjectOutput> projectOutputs;
+
+	//bi-directional many-to-one association to Project
+	@OneToMany(mappedBy="keyPerformanceIndicatorBean")
+	private List<Project> projects;
+
+	//bi-directional many-to-one association to KpiMeasure
+	@OneToMany(mappedBy="keyPerformanceIndicatorBean")
+	private List<KpiMeasure> kpiMeasures;
 
 	public KeyPerformanceIndicator() {
 	}
@@ -54,20 +61,12 @@ public class KeyPerformanceIndicator implements Serializable {
 		this.id = id;
 	}
 
-	public String getActual() {
-		return this.actual;
+	public String getCode() {
+		return this.code;
 	}
 
-	public void setActual(String actual) {
-		this.actual = actual;
-	}
-
-	public String getBaseline() {
-		return this.baseline;
-	}
-
-	public void setBaseline(String baseline) {
-		this.baseline = baseline;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDescription() {
@@ -76,30 +75,6 @@ public class KeyPerformanceIndicator implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getRemarks() {
-		return this.remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
-	public String getTarget() {
-		return this.target;
-	}
-
-	public void setTarget(String target) {
-		this.target = target;
 	}
 
 	public List<Call> getCalls() {
@@ -112,24 +87,32 @@ public class KeyPerformanceIndicator implements Serializable {
 
 	public Call addCall(Call call) {
 		getCalls().add(call);
-		call.setKeyPerformanceIndicator(this);
+		call.setKeyPerformanceIndicatorBean(this);
 
 		return call;
 	}
 
 	public Call removeCall(Call call) {
 		getCalls().remove(call);
-		call.setKeyPerformanceIndicator(null);
+		call.setKeyPerformanceIndicatorBean(null);
 
 		return call;
 	}
 
-	public KeyResultArea getKeyResultArea() {
-		return this.keyResultArea;
+	public KeyResultArea getKeyResultAreaBean() {
+		return this.keyResultAreaBean;
 	}
 
-	public void setKeyResultArea(KeyResultArea keyResultArea) {
-		this.keyResultArea = keyResultArea;
+	public void setKeyResultAreaBean(KeyResultArea keyResultAreaBean) {
+		this.keyResultAreaBean = keyResultAreaBean;
+	}
+
+	public Programme getProgrammeBean() {
+		return this.programmeBean;
+	}
+
+	public void setProgrammeBean(Programme programmeBean) {
+		this.programmeBean = programmeBean;
 	}
 
 	public List<ProjectOutput> getProjectOutputs() {
@@ -142,16 +125,60 @@ public class KeyPerformanceIndicator implements Serializable {
 
 	public ProjectOutput addProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().add(projectOutput);
-		projectOutput.setKeyPerformanceIndicator(this);
+		projectOutput.setKeyPerformanceIndicatorBean(this);
 
 		return projectOutput;
 	}
 
 	public ProjectOutput removeProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().remove(projectOutput);
-		projectOutput.setKeyPerformanceIndicator(null);
+		projectOutput.setKeyPerformanceIndicatorBean(null);
 
 		return projectOutput;
+	}
+
+	public List<Project> getProjects() {
+		return this.projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
+	public Project addProject(Project project) {
+		getProjects().add(project);
+		project.setKeyPerformanceIndicatorBean(this);
+
+		return project;
+	}
+
+	public Project removeProject(Project project) {
+		getProjects().remove(project);
+		project.setKeyPerformanceIndicatorBean(null);
+
+		return project;
+	}
+
+	public List<KpiMeasure> getKpiMeasures() {
+		return this.kpiMeasures;
+	}
+
+	public void setKpiMeasures(List<KpiMeasure> kpiMeasures) {
+		this.kpiMeasures = kpiMeasures;
+	}
+
+	public KpiMeasure addKpiMeasure(KpiMeasure kpiMeasure) {
+		getKpiMeasures().add(kpiMeasure);
+		kpiMeasure.setKeyPerformanceIndicatorBean(this);
+
+		return kpiMeasure;
+	}
+
+	public KpiMeasure removeKpiMeasure(KpiMeasure kpiMeasure) {
+		getKpiMeasures().remove(kpiMeasure);
+		kpiMeasure.setKeyPerformanceIndicatorBean(null);
+
+		return kpiMeasure;
 	}
 
 }

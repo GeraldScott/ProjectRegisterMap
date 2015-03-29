@@ -16,6 +16,8 @@ public class Province implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PROVINCES_ID_GENERATOR", sequenceName="PROVINCES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROVINCES_ID_GENERATOR")
 	private Integer id;
 
 	private String code;
@@ -23,7 +25,7 @@ public class Province implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Place
-	@OneToMany(mappedBy="province")
+	@OneToMany(mappedBy="provinceBean")
 	private List<Place> places;
 
 	public Province() {
@@ -63,14 +65,14 @@ public class Province implements Serializable {
 
 	public Place addPlace(Place place) {
 		getPlaces().add(place);
-		place.setProvince(this);
+		place.setProvinceBean(this);
 
 		return place;
 	}
 
 	public Place removePlace(Place place) {
 		getPlaces().remove(place);
-		place.setProvince(null);
+		place.setProvinceBean(null);
 
 		return place;
 	}

@@ -2,7 +2,7 @@ package za.co.taung.projectregistermap.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -16,10 +16,13 @@ public class CallEvaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="CALL_EVALUATIONS_ID_GENERATOR", sequenceName="CALL_EVALUATIONS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CALL_EVALUATIONS_ID_GENERATOR")
 	private Integer id;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name="evaluation_date")
-	private Timestamp evaluationDate;
+	private Date evaluationDate;
 
 	private String remarks;
 
@@ -28,11 +31,11 @@ public class CallEvaluation implements Serializable {
 	//bi-directional many-to-one association to CallApplication
 	@ManyToOne
 	@JoinColumn(name="call_application")
-	private CallApplication callApplication;
+	private CallApplication callApplicationBean;
 
 	//bi-directional many-to-one association to Person
 	@ManyToOne
-	@JoinColumn(name="evaluator")
+	@JoinColumn(name="assessor")
 	private Person person;
 
 	public CallEvaluation() {
@@ -46,11 +49,11 @@ public class CallEvaluation implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getEvaluationDate() {
+	public Date getEvaluationDate() {
 		return this.evaluationDate;
 	}
 
-	public void setEvaluationDate(Timestamp evaluationDate) {
+	public void setEvaluationDate(Date evaluationDate) {
 		this.evaluationDate = evaluationDate;
 	}
 
@@ -70,12 +73,12 @@ public class CallEvaluation implements Serializable {
 		this.score = score;
 	}
 
-	public CallApplication getCallApplication() {
-		return this.callApplication;
+	public CallApplication getCallApplicationBean() {
+		return this.callApplicationBean;
 	}
 
-	public void setCallApplication(CallApplication callApplication) {
-		this.callApplication = callApplication;
+	public void setCallApplicationBean(CallApplication callApplicationBean) {
+		this.callApplicationBean = callApplicationBean;
 	}
 
 	public Person getPerson() {

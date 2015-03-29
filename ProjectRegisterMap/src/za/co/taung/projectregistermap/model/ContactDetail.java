@@ -15,6 +15,8 @@ public class ContactDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="CONTACT_DETAILS_ID_GENERATOR", sequenceName="CONTACT_DETAILS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CONTACT_DETAILS_ID_GENERATOR")
 	private Integer id;
 
 	@Column(name="cell_phone")
@@ -23,18 +25,21 @@ public class ContactDetail implements Serializable {
 	@Column(name="email_address")
 	private String emailAddress;
 
+	@Column(name="fax_no")
+	private String faxNo;
+
 	@Column(name="work_phone")
 	private String workPhone;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
 	@JoinColumn(name="organisation")
-	private Organisation organisation;
+	private Organisation organisationBean;
 
 	//bi-directional many-to-one association to Person
 	@ManyToOne
 	@JoinColumn(name="person")
-	private Person person;
+	private Person personBean;
 
 	public ContactDetail() {
 	}
@@ -63,6 +68,14 @@ public class ContactDetail implements Serializable {
 		this.emailAddress = emailAddress;
 	}
 
+	public String getFaxNo() {
+		return this.faxNo;
+	}
+
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
+	}
+
 	public String getWorkPhone() {
 		return this.workPhone;
 	}
@@ -71,20 +84,20 @@ public class ContactDetail implements Serializable {
 		this.workPhone = workPhone;
 	}
 
-	public Organisation getOrganisation() {
-		return this.organisation;
+	public Organisation getOrganisationBean() {
+		return this.organisationBean;
 	}
 
-	public void setOrganisation(Organisation organisation) {
-		this.organisation = organisation;
+	public void setOrganisationBean(Organisation organisationBean) {
+		this.organisationBean = organisationBean;
 	}
 
-	public Person getPerson() {
-		return this.person;
+	public Person getPersonBean() {
+		return this.personBean;
 	}
 
-	public void setPerson(Person person) {
-		this.person = person;
+	public void setPersonBean(Person personBean) {
+		this.personBean = personBean;
 	}
 
 }

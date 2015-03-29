@@ -16,9 +16,9 @@ public class Place implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PLACES_ID_GENERATOR", sequenceName="PLACES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PLACES_ID_GENERATOR")
 	private Integer id;
-
-	private String name;
 
 	@Column(name="po_box_code")
 	private String poBoxCode;
@@ -28,26 +28,28 @@ public class Place implements Serializable {
 
 	private String suburb;
 
+	private String town;
+
 	//bi-directional many-to-one association to Address
-	@OneToMany(mappedBy="place")
+	@OneToMany(mappedBy="placeBean")
 	private List<Address> addresses;
+
+	//bi-directional many-to-one association to CallApplication
+	@OneToMany(mappedBy="placeBean")
+	private List<CallApplication> callApplications;
 
 	//bi-directional many-to-one association to GeoCode
 	@ManyToOne
 	@JoinColumn(name="geocode")
-	private GeoCode geocode;
-
-	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="place")
-	private List<CallApplication> callApplications;
+	private GeoCode geocodeBean;
 
 	//bi-directional many-to-one association to Province
 	@ManyToOne
 	@JoinColumn(name="province")
-	private Province province;
+	private Province provinceBean;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="place")
+	@OneToMany(mappedBy="placeBean")
 	private List<Project> projects;
 
 	public Place() {
@@ -59,14 +61,6 @@ public class Place implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPoBoxCode() {
@@ -93,6 +87,14 @@ public class Place implements Serializable {
 		this.suburb = suburb;
 	}
 
+	public String getTown() {
+		return this.town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
 	public List<Address> getAddresses() {
 		return this.addresses;
 	}
@@ -103,24 +105,16 @@ public class Place implements Serializable {
 
 	public Address addAddress(Address address) {
 		getAddresses().add(address);
-		address.setPlace(this);
+		address.setPlaceBean(this);
 
 		return address;
 	}
 
 	public Address removeAddress(Address address) {
 		getAddresses().remove(address);
-		address.setPlace(null);
+		address.setPlaceBean(null);
 
 		return address;
-	}
-
-	public GeoCode getGeocode() {
-		return this.geocode;
-	}
-
-	public void setGeocode(GeoCode geocode) {
-		this.geocode = geocode;
 	}
 
 	public List<CallApplication> getCallApplications() {
@@ -133,24 +127,32 @@ public class Place implements Serializable {
 
 	public CallApplication addCallApplication(CallApplication callApplication) {
 		getCallApplications().add(callApplication);
-		callApplication.setPlace(this);
+		callApplication.setPlaceBean(this);
 
 		return callApplication;
 	}
 
 	public CallApplication removeCallApplication(CallApplication callApplication) {
 		getCallApplications().remove(callApplication);
-		callApplication.setPlace(null);
+		callApplication.setPlaceBean(null);
 
 		return callApplication;
 	}
 
-	public Province getProvince() {
-		return this.province;
+	public GeoCode getGeocodeBean() {
+		return this.geocodeBean;
 	}
 
-	public void setProvince(Province province) {
-		this.province = province;
+	public void setGeocodeBean(GeoCode geocodeBean) {
+		this.geocodeBean = geocodeBean;
+	}
+
+	public Province getProvinceBean() {
+		return this.provinceBean;
+	}
+
+	public void setProvinceBean(Province provinceBean) {
+		this.provinceBean = provinceBean;
 	}
 
 	public List<Project> getProjects() {
@@ -163,14 +165,14 @@ public class Place implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setPlace(this);
+		project.setPlaceBean(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setPlace(null);
+		project.setPlaceBean(null);
 
 		return project;
 	}

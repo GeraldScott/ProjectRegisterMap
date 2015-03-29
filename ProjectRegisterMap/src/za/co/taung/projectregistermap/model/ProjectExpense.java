@@ -15,6 +15,8 @@ public class ProjectExpense implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PROJECT_EXPENSES_ID_GENERATOR", sequenceName="PROJECT_EXPENSES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROJECT_EXPENSES_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
@@ -25,7 +27,7 @@ public class ProjectExpense implements Serializable {
 	//bi-directional many-to-one association to Project
 	@ManyToOne
 	@JoinColumn(name="project")
-	private Project project;
+	private Project projectBean;
 
 	public ProjectExpense() {
 	}
@@ -54,12 +56,12 @@ public class ProjectExpense implements Serializable {
 		this.paymentReference = paymentReference;
 	}
 
-	public Project getProject() {
-		return this.project;
+	public Project getProjectBean() {
+		return this.projectBean;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectBean(Project projectBean) {
+		this.projectBean = projectBean;
 	}
 
 }

@@ -15,6 +15,8 @@ public class BankAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="BANK_ACCOUNTS_ID_GENERATOR", sequenceName="BANK_ACCOUNTS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BANK_ACCOUNTS_ID_GENERATOR")
 	private Integer id;
 
 	@Column(name="account_name")

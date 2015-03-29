@@ -16,6 +16,8 @@ public class AddressType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="ADDRESS_TYPES_ID_GENERATOR", sequenceName="ADDRESS_TYPES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADDRESS_TYPES_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
@@ -23,7 +25,7 @@ public class AddressType implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Address
-	@OneToMany(mappedBy="addressType")
+	@OneToMany(mappedBy="addressTypeBean")
 	private List<Address> addresses;
 
 	public AddressType() {
@@ -63,14 +65,14 @@ public class AddressType implements Serializable {
 
 	public Address addAddress(Address address) {
 		getAddresses().add(address);
-		address.setAddressType(this);
+		address.setAddressTypeBean(this);
 
 		return address;
 	}
 
 	public Address removeAddress(Address address) {
 		getAddresses().remove(address);
-		address.setAddressType(null);
+		address.setAddressTypeBean(null);
 
 		return address;
 	}

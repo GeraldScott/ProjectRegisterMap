@@ -16,6 +16,8 @@ public class CallApplicationStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="CALL_APPLICATION_STATUSES_ID_GENERATOR", sequenceName="CALL_APPLICATION_STATUSES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CALL_APPLICATION_STATUSES_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
@@ -23,7 +25,7 @@ public class CallApplicationStatus implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to CallApplication
-	@OneToMany(mappedBy="callApplicationStatus")
+	@OneToMany(mappedBy="callApplicationStatusBean")
 	private List<CallApplication> callApplications;
 
 	public CallApplicationStatus() {
@@ -63,14 +65,14 @@ public class CallApplicationStatus implements Serializable {
 
 	public CallApplication addCallApplication(CallApplication callApplication) {
 		getCallApplications().add(callApplication);
-		callApplication.setCallApplicationStatus(this);
+		callApplication.setCallApplicationStatusBean(this);
 
 		return callApplication;
 	}
 
 	public CallApplication removeCallApplication(CallApplication callApplication) {
 		getCallApplications().remove(callApplication);
-		callApplication.setCallApplicationStatus(null);
+		callApplication.setCallApplicationStatusBean(null);
 
 		return callApplication;
 	}

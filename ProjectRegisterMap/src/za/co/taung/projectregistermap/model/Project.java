@@ -2,7 +2,7 @@ package za.co.taung.projectregistermap.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,37 +17,46 @@ public class Project implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PROJECTS_ID_GENERATOR", sequenceName="PROJECTS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROJECTS_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name="end_date")
-	private Timestamp endDate;
+	private Date endDate;
 
 	private String name;
 
-	@Column(name="project_reference")
-	private String projectReference;
+	@Column(name="project_code")
+	private String projectCode;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name="start_date")
-	private Timestamp startDate;
+	private Date startDate;
 
 	//bi-directional many-to-one association to ProjectExpense
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="projectBean")
 	private List<ProjectExpense> projectExpenses;
 
 	//bi-directional many-to-one association to ProjectMilestone
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="projectBean")
 	private List<ProjectMilestone> projectMilestones;
 
 	//bi-directional many-to-one association to ProjectOutput
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="projectBean")
 	private List<ProjectOutput> projectOutputs;
 
 	//bi-directional many-to-one association to CallApplication
 	@ManyToOne
 	@JoinColumn(name="call_application")
-	private CallApplication callApplication;
+	private CallApplication callApplicationBean;
+
+	//bi-directional many-to-one association to KeyPerformanceIndicator
+	@ManyToOne
+	@JoinColumn(name="key_performance_indicator")
+	private KeyPerformanceIndicator keyPerformanceIndicatorBean;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -62,17 +71,22 @@ public class Project implements Serializable {
 	//bi-directional many-to-one association to Place
 	@ManyToOne
 	@JoinColumn(name="place")
-	private Place place;
+	private Place placeBean;
+
+	//bi-directional many-to-one association to ProjectMilestone
+	@ManyToOne
+	@JoinColumn(name="latest_milestone")
+	private ProjectMilestone projectMilestone;
 
 	//bi-directional many-to-one association to ProjectStatus
 	@ManyToOne
 	@JoinColumn(name="project_status")
-	private ProjectStatus projectStatus;
+	private ProjectStatus projectStatusBean;
 
 	//bi-directional many-to-one association to ProjectType
 	@ManyToOne
 	@JoinColumn(name="project_type")
-	private ProjectType projectType;
+	private ProjectType projectTypeBean;
 
 	public Project() {
 	}
@@ -93,11 +107,11 @@ public class Project implements Serializable {
 		this.description = description;
 	}
 
-	public Timestamp getEndDate() {
+	public Date getEndDate() {
 		return this.endDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -109,19 +123,19 @@ public class Project implements Serializable {
 		this.name = name;
 	}
 
-	public String getProjectReference() {
-		return this.projectReference;
+	public String getProjectCode() {
+		return this.projectCode;
 	}
 
-	public void setProjectReference(String projectReference) {
-		this.projectReference = projectReference;
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -135,14 +149,14 @@ public class Project implements Serializable {
 
 	public ProjectExpense addProjectExpens(ProjectExpense projectExpens) {
 		getProjectExpenses().add(projectExpens);
-		projectExpens.setProject(this);
+		projectExpens.setProjectBean(this);
 
 		return projectExpens;
 	}
 
 	public ProjectExpense removeProjectExpens(ProjectExpense projectExpens) {
 		getProjectExpenses().remove(projectExpens);
-		projectExpens.setProject(null);
+		projectExpens.setProjectBean(null);
 
 		return projectExpens;
 	}
@@ -157,14 +171,14 @@ public class Project implements Serializable {
 
 	public ProjectMilestone addProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().add(projectMilestone);
-		projectMilestone.setProject(this);
+		projectMilestone.setProjectBean(this);
 
 		return projectMilestone;
 	}
 
 	public ProjectMilestone removeProjectMilestone(ProjectMilestone projectMilestone) {
 		getProjectMilestones().remove(projectMilestone);
-		projectMilestone.setProject(null);
+		projectMilestone.setProjectBean(null);
 
 		return projectMilestone;
 	}
@@ -179,24 +193,32 @@ public class Project implements Serializable {
 
 	public ProjectOutput addProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().add(projectOutput);
-		projectOutput.setProject(this);
+		projectOutput.setProjectBean(this);
 
 		return projectOutput;
 	}
 
 	public ProjectOutput removeProjectOutput(ProjectOutput projectOutput) {
 		getProjectOutputs().remove(projectOutput);
-		projectOutput.setProject(null);
+		projectOutput.setProjectBean(null);
 
 		return projectOutput;
 	}
 
-	public CallApplication getCallApplication() {
-		return this.callApplication;
+	public CallApplication getCallApplicationBean() {
+		return this.callApplicationBean;
 	}
 
-	public void setCallApplication(CallApplication callApplication) {
-		this.callApplication = callApplication;
+	public void setCallApplicationBean(CallApplication callApplicationBean) {
+		this.callApplicationBean = callApplicationBean;
+	}
+
+	public KeyPerformanceIndicator getKeyPerformanceIndicatorBean() {
+		return this.keyPerformanceIndicatorBean;
+	}
+
+	public void setKeyPerformanceIndicatorBean(KeyPerformanceIndicator keyPerformanceIndicatorBean) {
+		this.keyPerformanceIndicatorBean = keyPerformanceIndicatorBean;
 	}
 
 	public Organisation getOrganisation() {
@@ -215,28 +237,36 @@ public class Project implements Serializable {
 		this.person = person;
 	}
 
-	public Place getPlace() {
-		return this.place;
+	public Place getPlaceBean() {
+		return this.placeBean;
 	}
 
-	public void setPlace(Place place) {
-		this.place = place;
+	public void setPlaceBean(Place placeBean) {
+		this.placeBean = placeBean;
 	}
 
-	public ProjectStatus getProjectStatus() {
-		return this.projectStatus;
+	public ProjectMilestone getProjectMilestone() {
+		return this.projectMilestone;
 	}
 
-	public void setProjectStatus(ProjectStatus projectStatus) {
-		this.projectStatus = projectStatus;
+	public void setProjectMilestone(ProjectMilestone projectMilestone) {
+		this.projectMilestone = projectMilestone;
 	}
 
-	public ProjectType getProjectType() {
-		return this.projectType;
+	public ProjectStatus getProjectStatusBean() {
+		return this.projectStatusBean;
 	}
 
-	public void setProjectType(ProjectType projectType) {
-		this.projectType = projectType;
+	public void setProjectStatusBean(ProjectStatus projectStatusBean) {
+		this.projectStatusBean = projectStatusBean;
+	}
+
+	public ProjectType getProjectTypeBean() {
+		return this.projectTypeBean;
+	}
+
+	public void setProjectTypeBean(ProjectType projectTypeBean) {
+		this.projectTypeBean = projectTypeBean;
 	}
 
 }

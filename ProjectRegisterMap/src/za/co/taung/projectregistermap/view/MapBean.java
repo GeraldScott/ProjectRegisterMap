@@ -63,10 +63,10 @@ public class MapBean implements Serializable {
 				myAddresses = myPlace.getAddresses();
 				for (Address myAddress:myAddresses){
 					String myData = myAddress.getFirstLine()+" "+myAddress.getSecondLine()+"\n"+
-							myAddress.getPlace().getSuburb()+" "+myAddress.getPlace().getName();
+							myAddress.getPlaceBean().getSuburb()+" "+myAddress.getPlaceBean().getTown();
 					model.addOverlay(new Marker(new LatLng(
 							myGeoCode.getLatitude(), myGeoCode.getLongitude()), 
-							myAddress.getOrganisation().getName(), // Title of marker, shown on roll-over
+							myAddress.getOrganisationBean().getName(), // Title of marker, shown on roll-over
 							myData)); // Data load for displaying in growl on marker select
 				}
 			} 

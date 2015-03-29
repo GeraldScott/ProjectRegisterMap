@@ -2,6 +2,7 @@ package za.co.taung.projectregistermap.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,9 +17,16 @@ public class CallApplication implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="CALL_APPLICATIONS_ID_GENERATOR", sequenceName="CALL_APPLICATIONS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CALL_APPLICATIONS_ID_GENERATOR")
 	private Integer id;
 
-	private double amount;
+	@Column(name="amount_requested")
+	private double amountRequested;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="application_date")
+	private Date applicationDate;
 
 	@Column(name="application_no")
 	private Integer applicationNo;
@@ -30,12 +38,12 @@ public class CallApplication implements Serializable {
 	//bi-directional many-to-one association to CallApplicationStatus
 	@ManyToOne
 	@JoinColumn(name="call_application_status")
-	private CallApplicationStatus callApplicationStatus;
+	private CallApplicationStatus callApplicationStatusBean;
 
 	//bi-directional many-to-one association to Call
 	@ManyToOne
 	@JoinColumn(name="call")
-	private Call call;
+	private Call callBean;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
@@ -45,14 +53,14 @@ public class CallApplication implements Serializable {
 	//bi-directional many-to-one association to Place
 	@ManyToOne
 	@JoinColumn(name="place")
-	private Place place;
+	private Place placeBean;
 
 	//bi-directional many-to-one association to CallEvaluation
-	@OneToMany(mappedBy="callApplication")
+	@OneToMany(mappedBy="callApplicationBean")
 	private List<CallEvaluation> callEvaluations;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="callApplication")
+	@OneToMany(mappedBy="callApplicationBean")
 	private List<Project> projects;
 
 	public CallApplication() {
@@ -66,12 +74,20 @@ public class CallApplication implements Serializable {
 		this.id = id;
 	}
 
-	public double getAmount() {
-		return this.amount;
+	public double getAmountRequested() {
+		return this.amountRequested;
 	}
 
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setAmountRequested(double amountRequested) {
+		this.amountRequested = amountRequested;
+	}
+
+	public Date getApplicationDate() {
+		return this.applicationDate;
+	}
+
+	public void setApplicationDate(Date applicationDate) {
+		this.applicationDate = applicationDate;
 	}
 
 	public Integer getApplicationNo() {
@@ -98,20 +114,20 @@ public class CallApplication implements Serializable {
 		this.score = score;
 	}
 
-	public CallApplicationStatus getCallApplicationStatus() {
-		return this.callApplicationStatus;
+	public CallApplicationStatus getCallApplicationStatusBean() {
+		return this.callApplicationStatusBean;
 	}
 
-	public void setCallApplicationStatus(CallApplicationStatus callApplicationStatus) {
-		this.callApplicationStatus = callApplicationStatus;
+	public void setCallApplicationStatusBean(CallApplicationStatus callApplicationStatusBean) {
+		this.callApplicationStatusBean = callApplicationStatusBean;
 	}
 
-	public Call getCall() {
-		return this.call;
+	public Call getCallBean() {
+		return this.callBean;
 	}
 
-	public void setCall(Call call) {
-		this.call = call;
+	public void setCallBean(Call callBean) {
+		this.callBean = callBean;
 	}
 
 	public Organisation getOrganisation() {
@@ -122,12 +138,12 @@ public class CallApplication implements Serializable {
 		this.organisation = organisation;
 	}
 
-	public Place getPlace() {
-		return this.place;
+	public Place getPlaceBean() {
+		return this.placeBean;
 	}
 
-	public void setPlace(Place place) {
-		this.place = place;
+	public void setPlaceBean(Place placeBean) {
+		this.placeBean = placeBean;
 	}
 
 	public List<CallEvaluation> getCallEvaluations() {
@@ -140,14 +156,14 @@ public class CallApplication implements Serializable {
 
 	public CallEvaluation addCallEvaluation(CallEvaluation callEvaluation) {
 		getCallEvaluations().add(callEvaluation);
-		callEvaluation.setCallApplication(this);
+		callEvaluation.setCallApplicationBean(this);
 
 		return callEvaluation;
 	}
 
 	public CallEvaluation removeCallEvaluation(CallEvaluation callEvaluation) {
 		getCallEvaluations().remove(callEvaluation);
-		callEvaluation.setCallApplication(null);
+		callEvaluation.setCallApplicationBean(null);
 
 		return callEvaluation;
 	}
@@ -162,14 +178,14 @@ public class CallApplication implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setCallApplication(this);
+		project.setCallApplicationBean(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setCallApplication(null);
+		project.setCallApplicationBean(null);
 
 		return project;
 	}

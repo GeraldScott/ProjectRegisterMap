@@ -16,14 +16,18 @@ public class ProjectType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PROJECT_TYPES_ID_GENERATOR", sequenceName="PROJECT_TYPES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROJECT_TYPES_ID_GENERATOR")
 	private Integer id;
+
+	private String code;
 
 	private String description;
 
 	private String type;
 
 	//bi-directional many-to-one association to Project
-	@OneToMany(mappedBy="projectType")
+	@OneToMany(mappedBy="projectTypeBean")
 	private List<Project> projects;
 
 	public ProjectType() {
@@ -35,6 +39,14 @@ public class ProjectType implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDescription() {
@@ -63,14 +75,14 @@ public class ProjectType implements Serializable {
 
 	public Project addProject(Project project) {
 		getProjects().add(project);
-		project.setProjectType(this);
+		project.setProjectTypeBean(this);
 
 		return project;
 	}
 
 	public Project removeProject(Project project) {
 		getProjects().remove(project);
-		project.setProjectType(null);
+		project.setProjectTypeBean(null);
 
 		return project;
 	}

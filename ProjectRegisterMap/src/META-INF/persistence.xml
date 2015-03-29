@@ -14,9 +14,12 @@
 		<class>za.co.taung.projectregistermap.model.JobTitle</class>
 		<class>za.co.taung.projectregistermap.model.KeyPerformanceIndicator</class>
 		<class>za.co.taung.projectregistermap.model.KeyResultArea</class>
+		<class>za.co.taung.projectregistermap.model.KpiMeasure</class>
 		<class>za.co.taung.projectregistermap.model.MilestoneType</class>
+		<class>za.co.taung.projectregistermap.model.OrganisationStatus</class>
 		<class>za.co.taung.projectregistermap.model.OrganisationType</class>
 		<class>za.co.taung.projectregistermap.model.Organisation</class>
+		<class>za.co.taung.projectregistermap.model.PersonalTitle</class>
 		<class>za.co.taung.projectregistermap.model.Person</class>
 		<class>za.co.taung.projectregistermap.model.Place</class>
 		<class>za.co.taung.projectregistermap.model.Programme</class>
@@ -27,6 +30,7 @@
 		<class>za.co.taung.projectregistermap.model.ProjectType</class>
 		<class>za.co.taung.projectregistermap.model.Project</class>
 		<class>za.co.taung.projectregistermap.model.Province</class>
+		<class>za.co.taung.projectregistermap.model.Role</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://goweb:5432/projectregisterdev"/>
 			<property name="javax.persistence.jdbc.user" value="projectregisterdev"/>

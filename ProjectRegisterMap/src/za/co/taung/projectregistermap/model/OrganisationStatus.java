@@ -6,29 +6,29 @@ import java.util.List;
 
 
 /**
- * The persistent class for the organisation_types database table.
+ * The persistent class for the organisation_statuses database table.
  * 
  */
 @Entity
-@Table(name="organisation_types")
-@NamedQuery(name="OrganisationType.findAll", query="SELECT o FROM OrganisationType o")
-public class OrganisationType implements Serializable {
+@Table(name="organisation_statuses")
+@NamedQuery(name="OrganisationStatus.findAll", query="SELECT o FROM OrganisationStatus o")
+public class OrganisationStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ORGANISATION_TYPES_ID_GENERATOR", sequenceName="ORGANISATION_TYPES_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ORGANISATION_TYPES_ID_GENERATOR")
+	@SequenceGenerator(name="ORGANISATION_STATUSES_ID_GENERATOR", sequenceName="ORGANISATION_STATUSES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ORGANISATION_STATUSES_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
 
-	private String type;
+	private String status;
 
 	//bi-directional many-to-one association to Organisation
-	@OneToMany(mappedBy="organisationTypeBean")
+	@OneToMany(mappedBy="organisationStatusBean")
 	private List<Organisation> organisations;
 
-	public OrganisationType() {
+	public OrganisationStatus() {
 	}
 
 	public Integer getId() {
@@ -47,12 +47,12 @@ public class OrganisationType implements Serializable {
 		this.description = description;
 	}
 
-	public String getType() {
-		return this.type;
+	public String getStatus() {
+		return this.status;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public List<Organisation> getOrganisations() {
@@ -65,14 +65,14 @@ public class OrganisationType implements Serializable {
 
 	public Organisation addOrganisation(Organisation organisation) {
 		getOrganisations().add(organisation);
-		organisation.setOrganisationTypeBean(this);
+		organisation.setOrganisationStatusBean(this);
 
 		return organisation;
 	}
 
 	public Organisation removeOrganisation(Organisation organisation) {
 		getOrganisations().remove(organisation);
-		organisation.setOrganisationTypeBean(null);
+		organisation.setOrganisationStatusBean(null);
 
 		return organisation;
 	}

@@ -15,6 +15,8 @@ public class ProjectOutput implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="PROJECT_OUTPUTS_ID_GENERATOR", sequenceName="PROJECT_OUTPUTS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROJECT_OUTPUTS_ID_GENERATOR")
 	private Integer id;
 
 	private String description;
@@ -22,12 +24,12 @@ public class ProjectOutput implements Serializable {
 	//bi-directional many-to-one association to KeyPerformanceIndicator
 	@ManyToOne
 	@JoinColumn(name="key_performance_indicator")
-	private KeyPerformanceIndicator keyPerformanceIndicator;
+	private KeyPerformanceIndicator keyPerformanceIndicatorBean;
 
 	//bi-directional many-to-one association to Project
 	@ManyToOne
 	@JoinColumn(name="project")
-	private Project project;
+	private Project projectBean;
 
 	public ProjectOutput() {
 	}
@@ -48,20 +50,20 @@ public class ProjectOutput implements Serializable {
 		this.description = description;
 	}
 
-	public KeyPerformanceIndicator getKeyPerformanceIndicator() {
-		return this.keyPerformanceIndicator;
+	public KeyPerformanceIndicator getKeyPerformanceIndicatorBean() {
+		return this.keyPerformanceIndicatorBean;
 	}
 
-	public void setKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
-		this.keyPerformanceIndicator = keyPerformanceIndicator;
+	public void setKeyPerformanceIndicatorBean(KeyPerformanceIndicator keyPerformanceIndicatorBean) {
+		this.keyPerformanceIndicatorBean = keyPerformanceIndicatorBean;
 	}
 
-	public Project getProject() {
-		return this.project;
+	public Project getProjectBean() {
+		return this.projectBean;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectBean(Project projectBean) {
+		this.projectBean = projectBean;
 	}
 
 }

@@ -15,6 +15,8 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="ADDRESSES_ID_GENERATOR", sequenceName="ADDRESSES_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADDRESSES_ID_GENERATOR")
 	private Integer id;
 
 	@Column(name="first_line")
@@ -23,22 +25,20 @@ public class Address implements Serializable {
 	@Column(name="second_line")
 	private String secondLine;
 
-	private String suburb;
+	//bi-directional many-to-one association to AddressType
+	@ManyToOne
+	@JoinColumn(name="address_type")
+	private AddressType addressTypeBean;
 
 	//bi-directional many-to-one association to Organisation
 	@ManyToOne
 	@JoinColumn(name="organisation")
-	private Organisation organisation;
+	private Organisation organisationBean;
 
 	//bi-directional many-to-one association to Place
 	@ManyToOne
 	@JoinColumn(name="place")
-	private Place place;
-
-	//bi-directional many-to-one association to AddressType
-	@ManyToOne
-	@JoinColumn(name="address_type")
-	private AddressType addressType;
+	private Place placeBean;
 
 	public Address() {
 	}
@@ -67,36 +67,28 @@ public class Address implements Serializable {
 		this.secondLine = secondLine;
 	}
 
-	public String getSuburb() {
-		return this.suburb;
+	public AddressType getAddressTypeBean() {
+		return this.addressTypeBean;
 	}
 
-	public void setSuburb(String suburb) {
-		this.suburb = suburb;
+	public void setAddressTypeBean(AddressType addressTypeBean) {
+		this.addressTypeBean = addressTypeBean;
 	}
 
-	public Organisation getOrganisation() {
-		return this.organisation;
+	public Organisation getOrganisationBean() {
+		return this.organisationBean;
 	}
 
-	public void setOrganisation(Organisation organisation) {
-		this.organisation = organisation;
+	public void setOrganisationBean(Organisation organisationBean) {
+		this.organisationBean = organisationBean;
 	}
 
-	public Place getPlace() {
-		return this.place;
+	public Place getPlaceBean() {
+		return this.placeBean;
 	}
 
-	public void setPlace(Place place) {
-		this.place = place;
-	}
-
-	public AddressType getAddressType() {
-		return this.addressType;
-	}
-
-	public void setAddressType(AddressType addressType) {
-		this.addressType = addressType;
+	public void setPlaceBean(Place placeBean) {
+		this.placeBean = placeBean;
 	}
 
 }

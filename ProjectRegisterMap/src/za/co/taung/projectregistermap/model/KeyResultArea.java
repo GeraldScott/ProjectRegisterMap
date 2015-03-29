@@ -16,20 +16,30 @@ public class KeyResultArea implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="KEY_RESULT_AREAS_ID_GENERATOR", sequenceName="KEY_RESULT_AREAS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="KEY_RESULT_AREAS_ID_GENERATOR")
 	private Integer id;
+
+	private String code;
 
 	private String description;
 
-	private String name;
+	//bi-directional many-to-one association to Call
+	@OneToMany(mappedBy="keyResultAreaBean")
+	private List<Call> calls;
 
 	//bi-directional many-to-one association to KeyPerformanceIndicator
-	@OneToMany(mappedBy="keyResultArea")
+	@OneToMany(mappedBy="keyResultAreaBean")
 	private List<KeyPerformanceIndicator> keyPerformanceIndicators;
 
 	//bi-directional many-to-one association to Programme
 	@ManyToOne
 	@JoinColumn(name="programme")
-	private Programme programme;
+	private Programme programmeBean;
+
+	//bi-directional many-to-one association to KpiMeasure
+	@OneToMany(mappedBy="keyResultAreaBean")
+	private List<KpiMeasure> kpiMeasures;
 
 	public KeyResultArea() {
 	}
@@ -42,6 +52,14 @@ public class KeyResultArea implements Serializable {
 		this.id = id;
 	}
 
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getDescription() {
 		return this.description;
 	}
@@ -50,12 +68,26 @@ public class KeyResultArea implements Serializable {
 		this.description = description;
 	}
 
-	public String getName() {
-		return this.name;
+	public List<Call> getCalls() {
+		return this.calls;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCalls(List<Call> calls) {
+		this.calls = calls;
+	}
+
+	public Call addCall(Call call) {
+		getCalls().add(call);
+		call.setKeyResultAreaBean(this);
+
+		return call;
+	}
+
+	public Call removeCall(Call call) {
+		getCalls().remove(call);
+		call.setKeyResultAreaBean(null);
+
+		return call;
 	}
 
 	public List<KeyPerformanceIndicator> getKeyPerformanceIndicators() {
@@ -68,24 +100,46 @@ public class KeyResultArea implements Serializable {
 
 	public KeyPerformanceIndicator addKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
 		getKeyPerformanceIndicators().add(keyPerformanceIndicator);
-		keyPerformanceIndicator.setKeyResultArea(this);
+		keyPerformanceIndicator.setKeyResultAreaBean(this);
 
 		return keyPerformanceIndicator;
 	}
 
 	public KeyPerformanceIndicator removeKeyPerformanceIndicator(KeyPerformanceIndicator keyPerformanceIndicator) {
 		getKeyPerformanceIndicators().remove(keyPerformanceIndicator);
-		keyPerformanceIndicator.setKeyResultArea(null);
+		keyPerformanceIndicator.setKeyResultAreaBean(null);
 
 		return keyPerformanceIndicator;
 	}
 
-	public Programme getProgramme() {
-		return this.programme;
+	public Programme getProgrammeBean() {
+		return this.programmeBean;
 	}
 
-	public void setProgramme(Programme programme) {
-		this.programme = programme;
+	public void setProgrammeBean(Programme programmeBean) {
+		this.programmeBean = programmeBean;
+	}
+
+	public List<KpiMeasure> getKpiMeasures() {
+		return this.kpiMeasures;
+	}
+
+	public void setKpiMeasures(List<KpiMeasure> kpiMeasures) {
+		this.kpiMeasures = kpiMeasures;
+	}
+
+	public KpiMeasure addKpiMeasure(KpiMeasure kpiMeasure) {
+		getKpiMeasures().add(kpiMeasure);
+		kpiMeasure.setKeyResultAreaBean(this);
+
+		return kpiMeasure;
+	}
+
+	public KpiMeasure removeKpiMeasure(KpiMeasure kpiMeasure) {
+		getKpiMeasures().remove(kpiMeasure);
+		kpiMeasure.setKeyResultAreaBean(null);
+
+		return kpiMeasure;
 	}
 
 }

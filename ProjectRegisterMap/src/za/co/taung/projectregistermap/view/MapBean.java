@@ -29,58 +29,88 @@ import za.co.taung.projectregistermap.model.Place;
 @ManagedBean
 @ViewScoped
 public class MapBean implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private MapModel model;
 	private Marker marker;
 	private String centre = "-30.590260, 25.522092"; // Gariep Dam is the most central point of South Africa
 
-	private List<GeoCode> myGeoCodes = null;
-	private List<Place> myPlaces = null;
-	private List<Address> myAddresses = null;
-	
+	private String orgType = "ALL"; // TODO: pass this from the form
+
 	public MapBean() {
 
+		/*
+		 * Create JPA entity manager
+		 */
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProjectRegisterMap");
 		EntityManager em = emf.createEntityManager();
 
+		/*
+		 * Create the map model, centred on Gariep Dam
+		 */
 		model = new DefaultMapModel();
-
 		String[] myLatLong = null;
 		myLatLong = centre.split(",");
 		double latitude = Double.parseDouble(myLatLong[0]);
 		double longitude = Double.parseDouble(myLatLong[1]);
 		LatLng mostCentralPoint = new LatLng(latitude, longitude); // These are doubles
-		model.addOverlay(new Marker(mostCentralPoint, "Most central point of South Africa"));
+		model.addOverlay(new Marker(mostCentralPoint, "Gariep Dam, the most central point of South Africa"));
 
-		myGeoCodes = new ArrayList<GeoCode>();
+		/*
+		 * Get list of all geocodes
+		 */
+		List<GeoCode> myGeoCodes = new ArrayList<GeoCode>();
 		TypedQuery<GeoCode> query = em.createQuery("SELECT c FROM GeoCode c", GeoCode.class);
 		myGeoCodes = query.getResultList();
 
+		/*
+		 * Iterate over list, selecting the organisation type
+		 */
+		//		for (Organisation myorg:organisations){
+		//			if (myorg.getOrganisationTypeBean().getType().equals(orgType)||orgType.equals("ALL")){
+		//				List<Address> addresses = myorg.getAddresses();
+		//				boolean isMarkerPlaced = false; // Need a switch because organisations can have both street and postal addresses, so don't place the marker twice
+		//				for (Address address:addresses){
+		//						String myGrowl = address.getFirstLine()+" "+address.getSecondLine()+"\n"+address.getPlaceBean().getTown();
+		//						model.addOverlay(new Marker(new LatLng(
+		//								myGeoCode.getLatitude(), myGeoCode.getLongitude()), 
+		//								address.getOrganisationBean().getName(), // Title of marker, shown on roll-over
+		//								myGrowl)); // Data load for displaying in growl on marker select
+		//						isMarkerPlaced = true;
+		//					}
+		//				}
+		//
+		//			}
+		//		}
+		Map<Integer,Organisation>mappedOrganisations = new HashMap<Integer,Organisation>(); // Keep a list of organisations that have been mapped to avoid mapping more than once
 		for (GeoCode myGeoCode:myGeoCodes){
-			myPlaces = myGeoCode.getPlaces();
+			List<Place> myPlaces = myGeoCode.getPlaces();
 			for (Place myPlace:myPlaces){
-				myAddresses = myPlace.getAddresses();
+				List<Address> myAddresses = myPlace.getAddresses();
 				for (Address myAddress:myAddresses){
-					String myData = myAddress.getFirstLine()+" "+myAddress.getSecondLine()+"\n"+
-							myAddress.getPlaceBean().getSuburb()+" "+myAddress.getPlaceBean().getTown();
-					model.addOverlay(new Marker(new LatLng(
-							myGeoCode.getLatitude(), myGeoCode.getLongitude()), 
-							myAddress.getOrganisationBean().getName(), // Title of marker, shown on roll-over
-							myData)); // Data load for displaying in growl on marker select
+					if (myAddress.getOrganisationBean().getOrganisationTypeBean().getType().equals(orgType)||orgType.equals("ALL")) {
+						if (!mappedOrganisations.containsKey(myAddress.getOrganisationBean().getId())){ // Only map if it is not in the list
+							String myGrowl = myAddress.getFirstLine()+" "+myAddress.getSecondLine()+"\n"+myAddress.getPlaceBean().getTown();
+							model.addOverlay(new Marker(new LatLng(
+									myGeoCode.getLatitude(), myGeoCode.getLongitude()), 
+									myAddress.getOrganisationBean().getName(), // Title of marker, shown on roll-over
+									myGrowl)); // Data load for displaying in growl on marker select
+							mappedOrganisations.put(myAddress.getOrganisationBean().getId(), myAddress.getOrganisationBean()); // Note that it has been mapped
+						}
+					}
 				}
 			} 
 		}
 	}
-	
+
 	public String getCentre() {
 		return centre;
 	}
-	
+
 	public MapModel getModel() {
 		return model;
 	}
-	
+
 	public Marker getMarker() {
 		return marker;
 	}

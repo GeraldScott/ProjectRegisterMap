@@ -88,7 +88,9 @@ public class MapBean implements Serializable {
 			for (Place myPlace:myPlaces){
 				List<Address> myAddresses = myPlace.getAddresses();
 				for (Address myAddress:myAddresses){
-					if (myAddress.getOrganisationBean().getOrganisationTypeBean().getType().equals(orgType)||orgType.equals("ALL")) {
+				if (myAddress.getOrganisationBean().getOrganisationTypeBean() != null) {
+					if (myAddress.getOrganisationBean().getOrganisationTypeBean().getType().equals(orgType)||
+							orgType.equals("ALL")) {
 						if (!mappedOrganisations.containsKey(myAddress.getOrganisationBean().getId())){ // Only map if it is not in the list
 							String myGrowl = myAddress.getFirstLine()+" "+myAddress.getSecondLine()+"\n"+myAddress.getPlaceBean().getTown();
 							model.addOverlay(new Marker(new LatLng(
@@ -98,6 +100,7 @@ public class MapBean implements Serializable {
 							mappedOrganisations.put(myAddress.getOrganisationBean().getId(), myAddress.getOrganisationBean()); // Note that it has been mapped
 						}
 					}
+				}
 				}
 			} 
 		}
